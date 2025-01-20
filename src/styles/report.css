@@ -1,0 +1,25 @@
+body{
+    font-family: 'Collins', sans-serif;
+    font-size: large;
+}
+input{
+    text-align: center;
+    font-size: large;
+}
+select{
+    width: 100%;
+    font-size: small;
+    text-align: center;
+}
+
+button{
+    color: blue;
+    width: 50%;
+    font-size: large;
+    padding: 10px;
+}
+
+.dateInput{
+    width: 50%;
+    font-size: large;
+}
