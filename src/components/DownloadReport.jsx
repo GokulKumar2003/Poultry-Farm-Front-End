@@ -1,40 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/report.css'
 
-const tableStyle = {
-  borderCollapse: 'collapse', 
-  width: '50%',               
-  margin: '10% auto',         
-  boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)', 
-  borderRadius: '10px',        
-};
-
-const headerStyle = {
- 
-  padding: '10px',
-  textAlign: 'center',
-  backgroundColor: '#007BFF',
-  color: '#fff',
-  fontWeight: 'bold',
-  fontSize: '25px',
-  borderRadius: '5px',
-
-};
-
-const cellStyle = {
-  padding: '10px',
-  textAlign: 'center',
-  backgroundColor: '#f0f0f0',
-};
-
-const subHeaderStyle = {
-    
-  padding: '10px',
-  textAlign: 'center',
-  backgroundColor: '#f0f0f0',
-  fontSize: '20px',
-};
-
 export default function DownloadReport(){
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -115,17 +81,17 @@ export default function DownloadReport(){
 
     <>
     <form>
-    <table style={tableStyle}>
+    <table className='tableStyle'>
         <thead>
           <tr>
-            <th style={headerStyle} colSpan={2}>Reports</th>
+            <th className="headerStyle" colSpan={2}>Reports</th>
           </tr>
         </thead>
         
         <tbody>
           <tr>
-            <td style={subHeaderStyle} >Start Date</td>
-            <td style={cellStyle} className='dateInput'>
+            <td className="subHeaderStyle" >Start Date</td>
+            <td className="cellStyle" >
               <input
                 type="date"
                 value={startDate}
@@ -134,8 +100,8 @@ export default function DownloadReport(){
             </td>
           </tr>
           <tr>
-            <td style={subHeaderStyle}>End Date</td>
-            <td style={cellStyle} className='dateInput'>
+            <td className="subHeaderStyle">End Date</td>
+            <td className="cellStyle">
               <input
                 type="date"
                 value={endDate}
@@ -144,8 +110,8 @@ export default function DownloadReport(){
             </td>
           </tr>
           <tr>
-            <td style={subHeaderStyle}>Report Type</td>
-            <td style={cellStyle}>
+            <td className="subHeaderStyle">Report Type</td>
+            <td className="cellStyle">
               <select value={reportType} onChange={(e) => setReportType(e.target.value)}>
                 <option value="">Select Report Type</option>
                 <option value="individual-shed">Individual Shed Report</option>
@@ -154,8 +120,8 @@ export default function DownloadReport(){
           </td>
           </tr>
           <tr>
-            <td style={subHeaderStyle}>Shed</td>
-            <td style={cellStyle}>
+            <td className="subHeaderStyle">Shed</td>
+            <td className="cellStyle">
               <select value={shedId} onChange={(e) => setShedId(e.target.value)}>
                 <option value="">Select Shed ID</option>
                 <option value="1">Shed 1</option>
@@ -167,23 +133,23 @@ export default function DownloadReport(){
             </td>
           </tr>
           <tr>
-            <td style={cellStyle} colSpan={2}>
+            <td className="cellStyle" colSpan={2}>
               <button type="button" onClick={handleSubmit}>Get Report</button>
             </td>   
           </tr>
          
           <tr>
             {isInvalidRange ? (
-              <td style={cellStyle} colSpan={2}>Invalid Range</td>
+              <td className="cellStyle" colSpan={2}>Invalid Range</td>
             ) : rangeErr ? (
-              <td style={cellStyle} colSpan={2}>Select range of 30 days</td>
+              <td className="cellStyle" colSpan={2}>Select range of 30 days</td>
             ) : (
-              <td style={cellStyle} colSpan={2}></td>
+              <td className="cellStyle" colSpan={2}></td>
             )} 
           </tr>
   
           <tr>
-            <td style={cellStyle} colSpan={2}><DownloadLink loading={loading}
+            <td className="cellStyle" colSpan={2}><DownloadLink loading={loading}
                                                             downloadLink={downloadLink}
                                                             reportType={reportType}
                                                             shedId={shedId} />

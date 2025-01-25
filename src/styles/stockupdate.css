@@ -1,27 +1,114 @@
-body{
-    font-family:'Collins', sans-serif;
-    font-size: large;
+body {
+    font-family: 'Collins', sans-serif;
+    font-size: 1rem; /* Use relative units for better responsiveness */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: 1.6;
 }
-input{
-    width: 30%;
-    height: 5%;
+
+input, select, button, option {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 1em;
+}
+
+input {
+    width: 100%; /* Full width for responsiveness */
+    max-width: 400px; /* Add a max-width for better usability on larger screens */
     text-align: center;
-    font-size: large;
+    box-sizing: border-box;
 }
-select{
+
+select {
     width: 100%;
-    font-size: medium;
+    max-width: 400px;
+    box-sizing: border-box;
     text-align: center;
 }
 
-button{
-    width: 25%;
-    color: blue;
-    font-size: large;
-    padding: 10px;
+button {
+    width: auto; /* Allow the button width to adapt to its content */
+    background-color: #007BFF; /* A standard button color */
+    font-size: 1rem;
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.dateInput{
+button:hover {
+    background-color: #0056b3; /* Slightly darker shade for hover */
+    color: white;
+}
+
+.dateInput {
     width: 100%;
-    font-size: large;
+    font-size: 1rem;
+    padding: 0.5em;
+    box-sizing: border-box;
+}
+
+.tableStyle {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 800px; /* Add a max-width for better layout control */
+    margin: 2em auto; /* Center the table */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden; /* To round the edges */
+   
+}
+
+.tableStyle th, 
+.tableStyle td {
+    padding: 0.75em;
+    text-align: center;
+}
+
+.headerStyle {
+    padding: 1em;
+    text-align: center;
+    background-color: #007BFF;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.cellStyle {
+    padding: 0.75em;
+    text-align: center;
+    
+    color: #333;
+}
+
+.subHeaderStyle {
+    padding: 0.75em;
+    text-align: center;
+    /* background-color: #e9ecef; */
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    input, select, button {
+        width: 100%; /* Full width on smaller screens */
+    }
+
+    .tableStyle {
+        font-size: 0.9rem; /* Reduce font size for smaller screens */
+    }
+
+    .headerStyle {
+        font-size: 1.25rem;
+    }
+
+    .subHeaderStyle {
+        font-size: 1rem;
+    }
 }

@@ -1,42 +1,6 @@
 import React, { useState } from "react"
 import '../styles/stockupdate.css'
 
-const tableStyle = {
-    borderCollapse: 'collapse', 
-    width: '50%',               
-    margin: '10% auto',         
-    boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)', 
-    borderRadius: '10px',        
-  };
-  
-  const headerStyle = {
-   
-    padding: '10px',
-    textAlign: 'center',
-    backgroundColor: '#007BFF',
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: '25px',
-    borderRadius: '5px',
-  
-  };
-  
-  const cellStyle = {
-    
-    padding: '10px',
-    textAlign: 'center',
-    backgroundColor: '#f0f0f0',
-  };
-  
-  const subHeaderStyle = {
-    
-    padding: '10px',
-    textAlign: 'center',
-    backgroundColor: '#f0f0f0',
-    fontWeight: 'bold',
-    fontSize: '25px',
-  };
-
 export default function StockUpdate(){
     const [stockUpdateData, setStockUpdateData] = useState({shedId: 0,
                                                             date: '',
@@ -78,17 +42,17 @@ export default function StockUpdate(){
 
     return(
         <form>
-        <table style={tableStyle}>
+        <table className="tableStyle">
         <thead>
           <tr>
-            <th style={headerStyle} colSpan={2}>Stock Update</th>
+            <th className="headerStyle" colSpan={2}>Stock Update</th>
           </tr>
         </thead>
         
         <tbody>
           <tr>
-            <td style={subHeaderStyle}>Shed</td>
-            <td style={subHeaderStyle}> 
+            <td className="subHeaderStyle">Shed</td>
+            <td className="subHeaderStyle"> 
               <select  name="shedId" value={stockUpdateData.shedId} onChange={handleChange}>
                 <option value="0">Select Shed ID</option>
                 <option value="1">Shed 1</option>
@@ -100,60 +64,54 @@ export default function StockUpdate(){
             </td>
           </tr>
           <tr>
-            <td style={subHeaderStyle}>Date</td>
-            <td style={subHeaderStyle}>
+            <td className="subHeaderStyle">Date</td>
+            <td className="subHeaderStyle">
               <input type = "date" className="dateInput" name="date" value={stockUpdateData.date} onChange={handleChange} />
             </td>
           </tr>
           <tr>
-            <td style={cellStyle} colSpan={2}></td>
+            <td className="subHeaderStyle">Production</td>
+            <td className="subHeaderStyle">Sale</td>
           </tr>
           <tr>
-            <td style={subHeaderStyle}>Production</td>
-            <td style={subHeaderStyle}>Sale</td>
-          </tr>
-          <tr>
-            <td style={cellStyle}><p>Large</p> 
+            <td className="cellStyle"><p>Large</p> 
             <input type= " text" name="largeProduction" value={stockUpdateData.largeProduction} onChange={handleChange} />
             </td>
-            <td style={cellStyle}><p>Large</p>
+            <td className="cellStyle"><p>Large</p>
             <input type= " text" name="largeSale" value={stockUpdateData.largeSale} onChange={handleChange} />
             </td>
           </tr>
           <tr>
-            <td style={cellStyle}><p>Small</p> 
+            <td className="cellStyle"><p>Small</p> 
             <input type= " text" name="smallProduction" value={stockUpdateData.smallProduction} onChange={handleChange} />
             </td>
-            <td style={cellStyle}><p>Small</p> 
+            <td className="cellStyle"><p>Small</p> 
             <input type= " text" name="smallSale" value={stockUpdateData.smallSale} onChange={handleChange} />
             </td>
           </tr>
           <tr>
-            <td style={cellStyle}><p>Broken</p> 
+            <td className="cellStyle"><p>Broken</p> 
             <input type= " text" name="brokenProduction" value={stockUpdateData.brokenProduction} onChange={handleChange} />
             </td>
-            <td style={cellStyle}><p>Broken</p> 
+            <td className="cellStyle"><p>Broken</p> 
             <input type= " text" name="brokenSale" value={stockUpdateData.brokenSale} onChange={handleChange} />
             </td>
           </tr>
           <tr>
-            <td style={cellStyle}><p>Dirty</p>
+            <td className="cellStyle"><p>Dirty</p>
             <input type= " text" name="dirtyProduction" value={stockUpdateData.dirtyProduction} onChange={handleChange} />
             </td>
-            <td style={cellStyle}><p>Dirty</p> 
+            <td className="cellStyle"><p>Dirty</p> 
             <input type= " text" name="dirtySale" value={stockUpdateData.dirtySale} onChange={handleChange} />
             </td>
           </tr>
           <tr>
-            <td style={subHeaderStyle} colSpan={2}>Death Cnt</td>
-          </tr>
-          <tr>
-          <td style={subHeaderStyle} colSpan={2}>
+            <td className="subHeaderStyle" colSpan={2}><p>Death Cnt</p>
             <input type= " text" name="deathCnt" value={stockUpdateData.deathCnt} onChange={handleChange} />
             </td>
           </tr>
           <tr>
-            <td style={cellStyle} colSpan={2}>
+            <td className="cellStyle" colSpan={2}>
                 <button type="button" onClick={handleSubmit}>Update Stock</button>
             </td>
           </tr>
