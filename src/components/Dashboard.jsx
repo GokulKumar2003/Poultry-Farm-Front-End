@@ -44,43 +44,6 @@ export default function Dashboard() {
   );
 };
 
-const tableStyle = {
-  borderCollapse: 'collapse', 
-  width: '50%',               
-  margin: '5% auto',         
-  boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)', 
-  borderRadius: '10px',
-  font: 'collins',       
-};
-
-const headerStyle = {
- 
-  padding: '10px',
-  textAlign: 'center',
-  backgroundColor: '#007BFF',
-  color: '#fff',
-  fontWeight: 'bold',
-  fontSize: '25px',
-  borderRadius: '5px',
-
-};
-
-const cellStyle = {
-  
-  padding: '10px',
-  textAlign: 'center',
-  backgroundColor: '#f0f0f0',
-  fontSize: '20px',
-};
-
-const subHeaderStyle = {
-  
-  padding: '10px',
-  textAlign: 'center',
-  backgroundColor: '#f0f0f0',
-  fontWeight: 'bold',
-  fontSize: '20px',
-};
 
 function ShedGrid({shed}){
   const currentDate = new Date(); 
@@ -94,44 +57,44 @@ function ShedGrid({shed}){
   
   return(
     <>
-      <table style={tableStyle}>
+      <table className="tableStyle">
         <thead>
           <tr>
-            <th style={headerStyle} colSpan={2}>SHED {shed.shedId}</th>
+            <th className="headerStyle" colSpan={2}>SHED {shed.shedId}</th>
           </tr>
         </thead>
 
         <tbody>
           <tr>
-            <td style={subHeaderStyle} colSpan={2}>Egg Stock</td>
+            <td className="subHeaderStyle" colSpan={2}>Egg Stock</td>
           </tr>
           <tr>
-            <td style={cellStyle} colSpan={2}>Large <b>{shed.large}</b> </td>
+            <td className="cellStyle" colSpan={2}>Large <b>{shed.large}</b> </td>
           </tr>
           <tr>
-            <td style={cellStyle} colSpan={2}>Small <b>{shed.small}</b></td>
+            <td className="cellStyle" colSpan={2}>Small <b>{shed.small}</b></td>
           </tr>
           <tr>
-            <td style={cellStyle} colSpan={2}>Broken <b>{shed.broken}</b></td>
+            <td className="cellStyle" colSpan={2}>Broken <b>{shed.broken}</b></td>
           </tr>
           <tr>
-            <td style={cellStyle} colSpan={2}>Dirty <b>{shed.dirty}</b></td>
+            <td className="cellStyle" colSpan={2}>Dirty <b>{shed.dirty}</b></td>
           </tr>
           <tr>
-            <td style={subHeaderStyle}>Birds</td>
-            <td style={subHeaderStyle}>Dead</td>
+            <td className="subHeaderStyle">Birds</td>
+            <td className="subHeaderStyle">Dead</td>
           </tr>
           <tr>
-            <td style={cellStyle}>{shed.birdsCnt}</td>
-            <td style={cellStyle}>{shed.deathCnt}</td>
+            <td className="cellStyle">{shed.birdsCnt}</td>
+            <td className="cellStyle">{shed.deathCnt}</td>
           </tr>
           <tr>
-            <td style={subHeaderStyle}>Production Ratio</td>
-            <td style={subHeaderStyle}>Batch Start Date</td>
+            <td className="subHeaderStyle">Production Ratio</td>
+            <td className="subHeaderStyle">Batch Start Date</td>
           </tr>
           <tr>
-            <td style={cellStyle}>{shed.productionRatio}</td>
-            <td style={cellStyle}>{formattedDate}</td>
+            <td className="cellStyle">{shed.productionRatio}</td>
+            <td className="cellStyle">{formattedDate}</td>
           </tr>
         </tbody>
       </table>

@@ -1,0 +1,99 @@
+body {
+    font-family: 'Collins', sans-serif;
+    font-size: 1rem; /* Use relative units for better responsiveness */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: 1;
+}
+
+
+select {
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+button {
+    width: auto; /* Allow the button width to adapt to its content */
+    background-color: #007BFF; /* A standard button color */
+    font-size: 1rem;
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3; /* Slightly darker shade for hover */
+    color: white;
+}
+
+.dateInput {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.5em;
+    box-sizing: border-box;
+}
+
+.tableStyle {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 800px; /* Add a max-width for better layout control */
+    margin: 2em auto; /* Center the table */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden; /* To round the edges */
+   
+}
+
+.tableStyle th, 
+.tableStyle td {
+    padding: 0.75em;
+    text-align: center;
+}
+
+.headerStyle {
+    padding: 1em;
+    text-align: center;
+    background-color: #007BFF;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.cellStyle {
+    padding: 0.75em;
+    text-align: center;
+    
+    color: #333;
+}
+
+.subHeaderStyle {
+    padding: 0.75em;
+    text-align: center;
+    /* background-color: #e9ecef; */
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    input, select, button {
+        width: 100%; /* Full width on smaller screens */
+    }
+
+    .tableStyle {
+        font-size: 0.9rem; /* Reduce font size for smaller screens */
+    }
+
+    .headerStyle {
+        font-size: 1.25rem;
+    }
+
+    .subHeaderStyle {
+        font-size: 1rem;
+    }
+}

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/report.css'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function DownloadReport(){
   const [startDate, setStartDate] = useState('');
@@ -7,29 +9,70 @@ export default function DownloadReport(){
   const [reportType, setReportType] = useState('');
   const [shedId, setShedId] = useState(1);
   const [downloadLink, setDownloadLink] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [rangeErr, setRangeErr] = useState(false);
-  const [isInvalidRange, setIsInvalidRange] = useState(false);
+  
+  const showToast = (type) => {
+    // Dismiss all previous toasts before showing a new one
+    toast.dismiss();
+
+    switch (type) {
+      case "success":
+        toast.success("Report generated..",{
+          position: "top-right",
+          autoClose: 3000,
+        });
+        break;
+      case "error":
+        toast.error("Error in fetching..",{
+          position: "top-right",
+          autoClose: 3000,
+        });
+        break;
+      case "info":
+        toast.info("Generating the report..",{
+          position: "top-right",
+          autoClose: 3000,
+        });
+        break;
+      default:
+        toast("This is a default toast.");
+    }
+  }
 
   const handleSubmit = async () => { 
-    setIsInvalidRange(false)
-    setRangeErr(false)
+    
     const start = new Date(startDate)
     const end = new Date(endDate)
-    
-    console.log(start)
-    console.log(end)
-  
+    setDownloadLink('')
+    if(startDate === ''){
+      toast.error("Select Start Date..", {
+        position: "top-right",
+        autoClose: 2000,
+      });
+      return;
+    }
+    if(endDate === ''){
+      toast.error("Select End Date", {
+        position: "top-right",
+        autoClose: 2000,
+      });
+      return;
+    }
     if(end < start){
-      setIsInvalidRange(true);
+      toast.error("Enter valid Range..", {
+        position: "top-right",
+        autoClose: 2000,
+      });
       return;
     }
     if((end - start)/(1000*60*60*24) > 30){
-      setRangeErr(true);
+      toast.error("Select range of 30 days..", {
+        position: "top-right",
+        autoClose: 2000,
+      });
       return;
     }
     
-    setLoading(true)
+    showToast("info")
     // Create the payload with selected data
     const reqMsg = {
       shedId,
@@ -61,6 +104,7 @@ export default function DownloadReport(){
 
       // Check if the request was successful
       if (!response.ok) {
+        showToast("error")
         throw new Error('Failed to fetch report');
       }
 
@@ -69,12 +113,14 @@ export default function DownloadReport(){
 
       const link = URL.createObjectURL(data);
 
+      showToast("success")
       // Set the download link
       setDownloadLink(link);
     } catch (error) {
       console.error('Error downloading the report:', error);
+      showToast("error")
     }
-    setLoading(false)
+   
   };
 
   return (
@@ -113,7 +159,6 @@ export default function DownloadReport(){
             <td className="subHeaderStyle">Report Type</td>
             <td className="cellStyle">
               <select value={reportType} onChange={(e) => setReportType(e.target.value)}>
-                <option value="">Select Report Type</option>
                 <option value="individual-shed">Individual Shed Report</option>
                 <option value="overall">Overall Shed Report</option>
               </select>
@@ -123,7 +168,6 @@ export default function DownloadReport(){
             <td className="subHeaderStyle">Shed</td>
             <td className="cellStyle">
               <select value={shedId} onChange={(e) => setShedId(e.target.value)}>
-                <option value="">Select Shed ID</option>
                 <option value="1">Shed 1</option>
                 <option value="2">Shed 2</option>
                 <option value="3">Shed 3</option>
@@ -137,19 +181,9 @@ export default function DownloadReport(){
               <button type="button" onClick={handleSubmit}>Get Report</button>
             </td>   
           </tr>
-         
+        
           <tr>
-            {isInvalidRange ? (
-              <td className="cellStyle" colSpan={2}>Invalid Range</td>
-            ) : rangeErr ? (
-              <td className="cellStyle" colSpan={2}>Select range of 30 days</td>
-            ) : (
-              <td className="cellStyle" colSpan={2}></td>
-            )} 
-          </tr>
-  
-          <tr>
-            <td className="cellStyle" colSpan={2}><DownloadLink loading={loading}
+            <td className="cellStyle" colSpan={2}><DownloadLink 
                                                             downloadLink={downloadLink}
                                                             reportType={reportType}
                                                             shedId={shedId} />
@@ -158,21 +192,13 @@ export default function DownloadReport(){
         </tbody>
       </table>
       </form>
-      
+      <ToastContainer />
     </>
   );
 };
 
-function DownloadLink({loading, downloadLink, reportType, shedId}){
-
-  console.log(shedId);
-  if(loading){
-    return(
-      <div>
-        <p>Fetching the report...</p>
-      </div>
-    )
-  }
+function DownloadLink({downloadLink, reportType, shedId}){
+ 
   return(
     <>
       {downloadLink && (

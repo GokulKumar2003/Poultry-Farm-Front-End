@@ -4,7 +4,7 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    line-height: 1.6;
+    line-height: 1;
 }
 
 input, select, button, option {
@@ -21,6 +21,14 @@ input {
     max-width: 400px; /* Add a max-width for better usability on larger screens */
     text-align: center;
     box-sizing: border-box;
+}
+
+.error_input {
+    width: 100%; /* Full width for responsiveness */
+    max-width: 400px; /* Add a max-width for better usability on larger screens */
+    text-align: center;
+    box-sizing: border-box;
+    color: red;
 }
 
 select {
