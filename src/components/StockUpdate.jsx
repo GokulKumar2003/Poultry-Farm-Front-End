@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import '../styles/stockupdate.css'
+import '../styles/style.css'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

@@ -12,17 +12,29 @@ import StockUpdate from './components/StockUpdate'
 import DownloadReport from './components/DownloadReport'
 
 function App() {
-  
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    const toggleMobileMenu = () => {
+      setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
     return(
       <Router>
             <div>
-                <nav>
-                    <ul>
-                        <li><Link to="/">Login</Link></li>
-                        <li><Link to="/dashboard">Dashboard</Link></li>
-                        <li><Link to="/stock-update">Update Stock</Link></li>
-                        <li><Link to="/report">Report</Link></li>
-                    </ul>
+                <nav className="navbar">
+                    <div className='navbar-container'>
+                        <div className="navbar-logo">Anbhazhagan Poultry Farm</div>
+                        <ul className={`navbar-links ${isMobileMenuOpen ? "active" : ""}`}>
+                            <li><Link to="/">Login</Link></li>
+                            <li><Link to="/dashboard">Dashboard</Link></li>
+                            <li><Link to="/stock-update">Update Stock</Link></li>
+                            <li><Link to="/report">Report</Link></li>
+                        </ul>
+                        <button className="menu-toggle" onClick={toggleMobileMenu}>
+                            <span className="menu-bar"></span>
+                            <span className="menu-bar"></span>
+                            <span className="menu-bar"></span>
+                        </button>
+                    </div>
                 </nav>
                 <Routes>
                     <Route path="/" element={<Dashboard />} />
