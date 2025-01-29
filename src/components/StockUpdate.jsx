@@ -33,6 +33,7 @@ export default function StockUpdate(){
         toast.error("Enter a valid date..", {
           position: "top-right",
           autoClose: 2000,
+          theme: "dark",
         });
         return;
       }
@@ -45,6 +46,7 @@ export default function StockUpdate(){
           toast.error("Enter valid value..", {
             position: "top-right",
             autoClose: 2000,
+            theme: "dark",
           });
           return;
       }
@@ -53,6 +55,7 @@ export default function StockUpdate(){
       toast.info("Updating..", {
         position: "top-right",
         autoClose: 1000,
+        theme: "dark",
       });
       try {
         
@@ -67,6 +70,7 @@ export default function StockUpdate(){
           toast.success("Update successful..", {
             position: "top-right",
             autoClose: 3000,
+            theme: "dark",
           });
       }
       catch(err){
@@ -74,6 +78,7 @@ export default function StockUpdate(){
         toast.error("Error in Updating..", {
           position: "top-right",
           autoClose: 3000,
+          theme: "dark",
         });
       }
       

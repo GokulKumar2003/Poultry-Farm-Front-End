@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
-import '../styles/Loading.css'
+
 import '../styles/style.css'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Dashboard() {
   const [shedData, setShedData] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+  const [loadingErr, setLoadingErr] = useState(false);
+
   useEffect(() => {
     const fetchShedData = async () => {
       try {
@@ -17,6 +20,7 @@ export default function Dashboard() {
         setShedData(data);
       } catch (err) {
         console.log(err);
+        setLoadingErr(true)
       } finally {
         setLoading(false);
       }
@@ -26,11 +30,26 @@ export default function Dashboard() {
   }, []);
 
   if(loading){
-    return (
-      <div className="loading-container">
-        <div className="spinner"></div>
-        <p>Loading...</p>
-      </div>
+    return(
+      <>
+        <table className="dashboard">
+          <tr className="dashboard-title">
+            <td>Loading Stock..</td>
+          </tr>
+          </table>
+      </>
+    )
+  }
+  
+  if(loadingErr){
+    return(
+      <>
+        <table className="dashboard">
+          <tr className="dashboard-title">
+            <td>Error in Loading Stock..</td>
+          </tr>
+          </table>
+      </>
     )
   }
   return (
@@ -52,7 +71,8 @@ export default function Dashboard() {
             ))}
          
         </table>
-        
+        <Reset />
+        <ToastContainer />
       </>
       
   
@@ -85,60 +105,104 @@ function Shed({shed}) {
   )
 }
 
-// function ShedGrid({shed}){
-//   const currentDate = new Date(); 
-//   currentDate.setDate(currentDate.getDate() - shed.duration); 
+function Reset(){
 
-//   const day = currentDate.getDate().toString().padStart(2, '0'); 
-//   const month = currentDate.toLocaleString('default', { month: 'short' }); 
-//   const year = currentDate.getFullYear();
+  const [birdsCnt, setBirdsCnt] = useState(0);
+  const [shedId, setShedId] = useState(0);
+  const [confirmMsg, setConfirmMsg] = useState("");
 
-//   const formattedDate = `${day}-${month}-${year}`;
-  
-//   return(
-//     <>
-//       <table className="tableStyle">
-//         <thead>
-//           <tr>
-//             <th className="headerStyle" colSpan={2}>SHED {shed.shedId}</th>
-//           </tr>
-//         </thead>
+  async function handleReset(){
+    console.log('handle reset')
+    if(isNaN(birdsCnt)){
+      toast.error("Enter valid birds cnt..", {
+        position: "top-right",
+        autoClose: 2000,
+        theme: "dark",
+      });
+      return;
+    }
+    if(shedId == 0){
+      toast.error("Select shed..", {
+        position: "top-right",
+        autoClose: 2000,
+        theme: "dark",
+      });
+      return;
+    }
 
-//         <tbody>
-//           <tr>
-//             <td className="subHeaderStyle" colSpan={2}>Egg Stock</td>
-//           </tr>
-//           <tr>
-//             <td className="dashboard-cell" colSpan={2}>Large <b>{shed.large}</b> </td>
-//           </tr>
-//           <tr>
-//             <td className="dashboard-cell" colSpan={2}>Small <b>{shed.small}</b></td>
-//           </tr>
-//           <tr>
-//             <td className="dashboard-cell" colSpan={2}>Broken <b>{shed.broken}</b></td>
-//           </tr>
-//           <tr>
-//             <td className="dashboard-cell" colSpan={2}>Dirty <b>{shed.dirty}</b></td>
-//           </tr>
-//           <tr>
-//             <td className="subHeaderStyle">Birds</td>
-//             <td className="subHeaderStyle">Dead</td>
-//           </tr>
-//           <tr>
-//             <td className="dashboard-cell">{shed.birdsCnt}</td>
-//             <td className="dashboard-cell">{shed.deathCnt}</td>
-//           </tr>
-//           <tr>
-//             <td className="subHeaderStyle">Production Ratio</td>
-//             <td className="subHeaderStyle">Batch Start Date</td>
-//           </tr>
-//           <tr>
-//             <td className="dashboard-cell">{shed.productionRatio}</td>
-//             <td className="dashboard-cell">{formattedDate}</td>
-//           </tr>
-//         </tbody>
-//       </table>
-//     </>
-//   )
-// }
+    if(confirmMsg !== ("shed-"+shedId+"-"+birdsCnt)){
+      toast.error("Type the correct msg..", {
+        position: "top-right",
+        autoClose: 2000,
+        theme: "dark",
+      });
+      return;
+    }
+    try {
+            
+      await fetch('http://localhost:8080/api/1.0/stocks/reset', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({shedId, birdsCnt}),
+        });
+        toast.success("Reset successful..", {
+          position: "top-right",
+          autoClose: 3000,
+          theme: "dark",
+        });
+    }
+    catch(err){
+      console.log(err);
+      toast.error("Error in reset..", {
+        position: "top-right",
+        autoClose: 3000,
+        theme: "dark",
+      });
+    }
+  }
+  return(
+    <>
+      <table className="tableStyle">
+        <tr >
+          <td className="subHeaderStyle" colSpan={2}>
+              Stock Reset
+          </td>
+        </tr>
+        <tr>
+          <td className="cellStyle">
+              <b><p>Select Shed ID</p></b>
+              <select  name="shedId" value={shedId} onChange={(e)=>{setShedId(e.target.value)}}>
+                <option value="0">Shed</option>
+                <option value="1">Shed 1</option>
+                <option value="2">Shed 2</option>
+                <option value="3">Shed 3</option>
+                <option value="4">Shed 4</option>
+                <option value="5">Shed 5</option>
+              </select>
+          </td>
+          <td className="cellStyle">
+            <b><p>No of Birds</p></b>
+            <input type = "text" name="birds" value={birdsCnt} onChange={(e)=>{setBirdsCnt(e.target.value)}} />
+          </td>
+        </tr>
+        <tr>
+          <td className="cellStyle">
+            <span>Type this msg: <b>shed-{shedId}-{birdsCnt}</b></span>
+          </td>
+          <td className="cellStyle">
+            <input type = "text" name="birds" value={confirmMsg} onChange={(e)=>{setConfirmMsg(e.target.value)}} placeholder="type here.." />
+          </td>
+        </tr>
+        <tr>
+          <td className="cellStyle" colSpan={2}>
+            <button type="button" onClick={handleReset} >Reset Stock</button>
+          </td>
+        </tr>
+      </table>
+      <ToastContainer />
+    </>
+  )
+}
 

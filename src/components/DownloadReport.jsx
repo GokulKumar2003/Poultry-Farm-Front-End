@@ -19,18 +19,21 @@ export default function DownloadReport(){
         toast.success("Report generated..",{
           position: "top-right",
           autoClose: 3000,
+          theme: "dark",
         });
         break;
       case "error":
         toast.error("Error in fetching..",{
           position: "top-right",
           autoClose: 3000,
+          theme: "dark",
         });
         break;
       case "info":
         toast.info("Generating the report..",{
           position: "top-right",
           autoClose: 3000,
+          theme: "dark",
         });
         break;
       default:
@@ -47,6 +50,7 @@ export default function DownloadReport(){
       toast.error("Select Start Date..", {
         position: "top-right",
         autoClose: 2000,
+        theme: "dark",
       });
       return;
     }
@@ -54,6 +58,7 @@ export default function DownloadReport(){
       toast.error("Select End Date", {
         position: "top-right",
         autoClose: 2000,
+        theme: "dark",
       });
       return;
     }
@@ -61,6 +66,7 @@ export default function DownloadReport(){
       toast.error("Enter valid Range..", {
         position: "top-right",
         autoClose: 2000,
+        theme: "dark",
       });
       return;
     }
@@ -68,6 +74,7 @@ export default function DownloadReport(){
       toast.error("Select range of 30 days..", {
         position: "top-right",
         autoClose: 2000,
+        theme: "dark",
       });
       return;
     }

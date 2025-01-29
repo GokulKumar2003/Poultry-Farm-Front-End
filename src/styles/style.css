@@ -56,11 +56,12 @@ button:hover {
 .tableStyle {
   border-collapse: collapse;
   width: 100%;
-  max-width: 800px; /* Adjust table size */
+  max-width: 600px; /* Adjust table size */
   margin: 2em auto;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   color: #374151;
+  border: 2px solid #e2e8f0; 
 }
 
 .dashboard {
