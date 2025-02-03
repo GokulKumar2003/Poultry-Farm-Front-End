@@ -67,7 +67,7 @@ button:hover {
 .dashboard {
   border-collapse: collapse;
   width: 100%;
-  max-width: 1000px; /* Adjust table size */
+  max-width: 1100px; /* Adjust table size */
   margin: 2em auto;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -93,6 +93,14 @@ button:hover {
   text-align: center;
   background-color: #374151;
   color: #fff;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.report-title {
+  padding: 1em;
+  text-align: center;
+  color: #374151;
   font-weight: bold;
   font-size: 1rem;
 }

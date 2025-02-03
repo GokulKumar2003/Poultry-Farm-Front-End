@@ -3,13 +3,16 @@ import '../styles/style.css'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+
 export default function DownloadReport(){
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [reportType, setReportType] = useState('');
+  const [reportType, setReportType] = useState('individual-shed');
   const [shedId, setShedId] = useState(1);
   const [downloadLink, setDownloadLink] = useState('');
-  
+  const [report, setReport] = useState({})
+  const [isReportReady, setIsReportReady] = useState(false);
+
   const showToast = (type) => {
     // Dismiss all previous toasts before showing a new one
     toast.dismiss();
@@ -43,6 +46,7 @@ export default function DownloadReport(){
 
   const handleSubmit = async () => { 
     
+    setIsReportReady(false);
     const start = new Date(startDate)
     const end = new Date(endDate)
     setDownloadLink('')
@@ -70,8 +74,8 @@ export default function DownloadReport(){
       });
       return;
     }
-    if((end - start)/(1000*60*60*24) > 30){
-      toast.error("Select range of 30 days..", {
+    if((end - start)/(1000*60*60*24) > 31){
+      toast.error("Select range max of 30 days..", {
         position: "top-right",
         autoClose: 2000,
         theme: "dark",
@@ -89,40 +93,31 @@ export default function DownloadReport(){
 
     try {
       
-      let response = null
-      if(!reportType.localeCompare("individual-shed")){
-        response = await fetch('http://localhost:8080/api/1.0/reports/shed_report', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(reqMsg),
-        });
-      }
-      else{
-        response = await fetch('http://localhost:8080/api/1.0/reports/overall_report', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(reqMsg),
-        });
-      }
+      const url =
+        reportType === "individual-shed"
+        ? "http://localhost:8080/api/1.0/reports/shed_report"
+        : "http://localhost:8080/api/1.0/reports/overall_report";
+
+      const response = await fetch(url, {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify(reqMsg),
+                        });
 
       // Check if the request was successful
       if (!response.ok) {
+        console.log(response);
         showToast("error")
         throw new Error('Failed to fetch report');
       }
 
-      // Get the response as a Blob (Excel file)
-      const data = await response.blob();
-
-      const link = URL.createObjectURL(data);
-
-      showToast("success")
-      // Set the download link
-      setDownloadLink(link);
+      const Report = await response.json();
+      setReport(Report);
+      setIsReportReady(true);
+      console.log(report);
+      showToast("success");
     } catch (error) {
       console.error('Error downloading the report:', error);
       showToast("error")
@@ -199,6 +194,7 @@ export default function DownloadReport(){
         </tbody>
       </table>
       </form>
+      {isReportReady && <ReportTable report={report}/>}
       <ToastContainer />
     </>
   );
@@ -218,3 +214,68 @@ function DownloadLink({downloadLink, reportType, shedId}){
   )
 }
 
+function ReportTable({report}){
+  return(
+    <>
+      <table className='dashboard'>
+        {report[0].shedId == 0 ? 
+          <tr className="report-title">
+            <td colSpan={10}>OVERALL REPORT</td>
+            <td colSpan={1}><button>Download</button></td>
+          </tr> :
+          <tr className="report-title">
+            <td colSpan={10}>SHED {report[0].shedId}</td>
+            <td colSpan={1}><button>Download</button></td>
+          </tr>
+        }
+        <tr className="dashboard-title">
+          <td>DATE</td>
+          <td colSpan={4}>PRODUCTION</td>
+          <td colSpan={4}>SALE</td>
+          <td>DEATH</td>
+          <td>PROD. %</td>
+        </tr>
+        <tr className="dashboard-title">
+          <td ></td>
+          <td>Large</td>
+          <td>Small</td>
+          <td>Broken</td>
+          <td>Dirty</td>
+          <td>Large</td>
+          <td>Small</td>
+          <td>Broken</td>
+          <td>Dirty</td>
+          <td></td>
+          <td></td>
+        </tr>
+        {report.map((r, index) => (
+                <ReportTableEntry reportEntry={r} key={index} i={index}/>
+        ))}
+        
+      </table>
+    </>
+  )
+}
+
+function ReportTableEntry({reportEntry, i}){
+  console.log(i)
+  return(
+    <>
+    <tr className={(i%2 === 0) ? "even-row" : "odd-row"}>
+      <td className='dashboard-cell'>{reportEntry.date}</td>
+      <td className='dashboard-cell'>{reportEntry.largeProd}</td>
+      <td className='dashboard-cell'>{reportEntry.smallProd}</td>
+      <td className='dashboard-cell'>{reportEntry.brokenProd}</td>
+      <td className='dashboard-cell'>{reportEntry.dirtyProd}</td>
+      <td className='dashboard-cell'>{reportEntry.largeSale}</td>
+      <td className='dashboard-cell'>{reportEntry.smallSale}</td>
+      <td className='dashboard-cell'>{reportEntry.brokenSale}</td>
+      <td className='dashboard-cell'>{reportEntry.dirtySale}</td>
+      <td className='dashboard-cell'>{reportEntry.death}</td>
+      <td className='dashboard-cell'>{reportEntry.productionRatio}</td>
+
+
+    </tr>
+  </>
+  )
+}

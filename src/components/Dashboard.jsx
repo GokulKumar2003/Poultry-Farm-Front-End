@@ -57,13 +57,16 @@ export default function Dashboard() {
         <table className="dashboard">
           <tr className="dashboard-title">
             <td>SHED ID</td>
+            <td>START DATE</td>
+            <td>BATCH AGE</td>
             <td>LARGE</td>
             <td>SMALL</td>
-            <td>DIRTY</td>
             <td>BROKEN</td>
-            <td>BIRDS CNT</td>
-            <td>DEATH CNT</td>
-            <td>BATCH START DATE</td>
+            <td>DIRTY</td>
+            <td>PROD. %</td>
+            <td>BIRDS</td>
+            <td>DEATH</td>
+            
 
           </tr>
             {shedData.map((shed) => (
@@ -81,25 +84,33 @@ export default function Dashboard() {
 
 function Shed({shed}) {
 
-  const currentDate = new Date(); 
-  currentDate.setDate(currentDate.getDate() - shed.duration); 
+  console.log(shed)
+  const currentDate = new Date(shed.batchStartDate); 
 
   const day = currentDate.getDate().toString().padStart(2, '0'); 
   const month = currentDate.toLocaleString('default', { month: 'short' }); 
   const year = currentDate.getFullYear();
+
+  const days = Math.floor(Math.abs(new Date() - currentDate)/(1000*60*60*24));
+  const age = Math.floor(days/7);
+  const percentage = (shed.productionRatio.toFixed(4))*100;
 
   const formattedDate = `${day}-${month}-${year}`;
   return (
     <>
       <tr className={(shed.shedId%2) ? "even-row" : "odd-row"}>
         <td className="dashboard-cell">Shed {shed.shedId}</td>
+        <td className="dashboard-cell">{formattedDate}</td>
+        <td className="dashboard-cell">{days < 7 ? days <= 1 ? `${days} day` : `${days} days` : age <= 1 ? `${age} week` : `${age} weeks`} </td>
         <td className="dashboard-cell">{shed.large}</td>
         <td className="dashboard-cell">{shed.small}</td>
         <td className="dashboard-cell">{shed.broken}</td>
         <td className="dashboard-cell">{shed.dirty}</td>
+        <td className="dashboard-cell">{percentage}</td>
+
         <td className="dashboard-cell">{shed.birdsCnt}</td>
         <td className="dashboard-cell">{shed.deathCnt}</td>
-        <td className="dashboard-cell">{formattedDate}</td>
+        
       </tr>
     </>
   )
@@ -107,12 +118,13 @@ function Shed({shed}) {
 
 function Reset(){
 
-  const [birdsCnt, setBirdsCnt] = useState(0);
+  const [birdsCnt, setBirdsCnt] = useState('');
   const [shedId, setShedId] = useState(0);
   const [confirmMsg, setConfirmMsg] = useState("");
+  const [batchStartDate, setBatchStartDate] = useState("");
 
   async function handleReset(){
-    console.log('handle reset')
+
     if(isNaN(birdsCnt)){
       toast.error("Enter valid birds cnt..", {
         position: "top-right",
@@ -130,6 +142,14 @@ function Reset(){
       return;
     }
 
+    if(batchStartDate === ""){
+      toast.error("Select Date..", {
+        position: "top-right",
+        autoClose: 2000,
+        theme: "dark",
+      });
+      return;
+    }
     if(confirmMsg !== ("shed-"+shedId+"-"+birdsCnt)){
       toast.error("Type the correct msg..", {
         position: "top-right",
@@ -139,13 +159,13 @@ function Reset(){
       return;
     }
     try {
-            
+     
       await fetch('http://localhost:8080/api/1.0/stocks/reset', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({shedId, birdsCnt}),
+        body: JSON.stringify({shedId, birdsCnt, batchStartDate}),
         });
         toast.success("Reset successful..", {
           position: "top-right",
@@ -165,11 +185,11 @@ function Reset(){
   return(
     <>
       <table className="tableStyle">
-        <tr >
-          <td className="subHeaderStyle" colSpan={2}>
+        {/* <tr >
+          <td className="subHeaderStyle" colSpan={3}>
               Stock Reset
           </td>
-        </tr>
+        </tr> */}
         <tr>
           <td className="cellStyle">
               <b><p>Select Shed ID</p></b>
@@ -186,17 +206,19 @@ function Reset(){
             <b><p>No of Birds</p></b>
             <input type = "text" name="birds" value={birdsCnt} onChange={(e)=>{setBirdsCnt(e.target.value)}} />
           </td>
+          <td className="cellStyle">
+            <b><p>Batch Start Date</p></b>
+            <input type = "date" name="batch-start-date" value={batchStartDate} onChange={(e)=>{setBatchStartDate(e.target.value)}} />
+          </td>
         </tr>
         <tr>
           <td className="cellStyle">
-            <span>Type this msg: <b>shed-{shedId}-{birdsCnt}</b></span>
+            <span>Type this: <b>shed-{shedId}-{birdsCnt}</b></span>
           </td>
           <td className="cellStyle">
             <input type = "text" name="birds" value={confirmMsg} onChange={(e)=>{setConfirmMsg(e.target.value)}} placeholder="type here.." />
           </td>
-        </tr>
-        <tr>
-          <td className="cellStyle" colSpan={2}>
+          <td className="cellStyle" colSpan={3}>
             <button type="button" onClick={handleReset} >Reset Stock</button>
           </td>
         </tr>

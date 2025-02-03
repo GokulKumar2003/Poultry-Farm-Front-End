@@ -4,17 +4,17 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function StockUpdate(){
-    const [stockUpdateData, setStockUpdateData] = useState({shedId: 0,
+    const [stockUpdateData, setStockUpdateData] = useState({shedId: 1,
                                                             date: '',
-                                                            largeProduction: 0,
-                                                            smallProduction: 0,
-                                                            brokenProduction: 0,
-                                                            dirtyProduction: 0,
-                                                            largeSale: 0,
-                                                            smallSale: 0,
-                                                            brokenSale: 0,
-                                                            dirtySale: 0,
-                                                            deathCnt: 0,    
+                                                            largeProduction: '',
+                                                            smallProduction: '',
+                                                            brokenProduction: '',
+                                                            dirtyProduction: '',
+                                                            largeSale: '',
+                                                            smallSale: '',
+                                                            brokenSale: '',
+                                                            dirtySale: '',
+                                                            deathCnt: '',    
                                                             })
     
     const handleChange = (e) => {
