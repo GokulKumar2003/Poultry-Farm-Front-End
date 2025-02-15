@@ -183,14 +183,6 @@ export default function DownloadReport(){
               <button type="button" onClick={handleSubmit}>Get Report</button>
             </td>   
           </tr>
-        
-          <tr>
-            <td className="cellStyle" colSpan={2}><DownloadLink 
-                                                            downloadLink={downloadLink}
-                                                            reportType={reportType}
-                                                            shedId={shedId} />
-            </td>
-          </tr>
         </tbody>
       </table>
       </form>
@@ -199,20 +191,6 @@ export default function DownloadReport(){
     </>
   );
 };
-
-function DownloadLink({downloadLink, reportType, shedId}){
- 
-  return(
-    <>
-      {downloadLink && (
-      <a href={downloadLink} download = {!reportType.localeCompare("report") ? "Shed_"+toString(shedId)+"_report.xlsx" : "overall_report.xlsx"}>
-        Click here to download the report
-      </a>
-    )}
-    </>
-    
-  )
-}
 
 function ReportTable({report}){
   return(
@@ -225,18 +203,17 @@ function ReportTable({report}){
           </tr> :
           <tr className="report-title">
             <td colSpan={10}>SHED {report[0].shedId}</td>
-            <td colSpan={1}><button>Download</button></td>
+            <td colSpan={1}><button onClick={handleDownload}>Download</button></td>
           </tr>
         }
         <tr className="dashboard-title">
-          <td>DATE</td>
+          <td rowSpan={2}>DATE</td>
           <td colSpan={4}>PRODUCTION</td>
           <td colSpan={4}>SALE</td>
-          <td>DEATH</td>
-          <td>PROD. %</td>
+          <td rowSpan={2}>DEATH</td>
+          <td rowSpan={2}>PROD. %</td>
         </tr>
         <tr className="dashboard-title">
-          <td ></td>
           <td>Large</td>
           <td>Small</td>
           <td>Broken</td>
@@ -245,8 +222,6 @@ function ReportTable({report}){
           <td>Small</td>
           <td>Broken</td>
           <td>Dirty</td>
-          <td></td>
-          <td></td>
         </tr>
         {report.map((r, index) => (
                 <ReportTableEntry reportEntry={r} key={index} i={index}/>

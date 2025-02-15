@@ -150,7 +150,7 @@ function Reset(){
       });
       return;
     }
-    if(confirmMsg !== ("shed-"+shedId+"-"+birdsCnt)){
+    if(confirmMsg !== ("shed"+shedId+"-"+birdsCnt)){
       toast.error("Type the correct msg..", {
         position: "top-right",
         autoClose: 2000,
@@ -213,10 +213,10 @@ function Reset(){
         </tr>
         <tr>
           <td className="cellStyle">
-            <span>Type this: <b>shed-{shedId}-{birdsCnt}</b></span>
+            <span>Type this: <b>shed{shedId}-{birdsCnt}</b></span>
           </td>
           <td className="cellStyle">
-            <input type = "text" name="birds" value={confirmMsg} onChange={(e)=>{setConfirmMsg(e.target.value)}} placeholder="type here.." />
+            <input autocomplete="off" type = "text" name="birds" value={confirmMsg} onChange={(e)=>{setConfirmMsg(e.target.value)}} placeholder="type here.." />
           </td>
           <td className="cellStyle" colSpan={3}>
             <button type="button" onClick={handleReset} >Reset Stock</button>
