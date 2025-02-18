@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import '../styles/style.css'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Login(){
-  const [userName, setUserName] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const showToast = (type) => {
     // Dismiss all previous toasts before showing a new one
@@ -14,21 +16,14 @@ export default function Login(){
 
     switch (type) {
       case "success":
-        toast.success("Report generated..",{
+        toast.success("Logged in!",{
           position: "top-right",
           autoClose: 3000,
           theme: "dark",
         });
         break;
       case "error":
-        toast.error("Error in fetching..",{
-          position: "top-right",
-          autoClose: 3000,
-          theme: "dark",
-        });
-        break;
-      case "info":
-        toast.info("Generating the report..",{
+        toast.error("Error in logging in..",{
           position: "top-right",
           autoClose: 3000,
           theme: "dark",
@@ -40,8 +35,9 @@ export default function Login(){
   }
 
   const handleSubmit = async () => { 
-    
-    if(userName === ''){
+   
+  
+    if(username === ''){
       toast.error("Username can't be empty.", {
         position: "top-right",
         autoClose: 2000,
@@ -57,34 +53,13 @@ export default function Login(){
       });
       return;
     }
-    
-    // Create the payload with selected data
-    const reqMsg = {
-      userName,
-      password
-    };
 
     try {
-      
-      const url =
-        "http://localhost:8080/api/1.0/auth/login";
-
-      const response = await post(url, {
-                          method: "POST",
-                          headers: {
-                            "Content-Type": "application/json",
-                          },
-                          body: JSON.stringify(reqMsg),
-                        });
-
-      // Check if the request was successful
-      if (!response.ok) {
-        console.log(response);
-        showToast("error")
-        throw new Error('Failed to fetch report');
-      }
-
-      const Report = await response.json();
+      const response = await axios.post("http://localhost:8080/api/1.0/auth/login",
+      {username, password},
+      {headers: { "Content-Type": "application/json" }});
+      localStorage.setItem("token", response.data.token);
+      navigate("/dashboard");
       showToast("success");
     } catch (error) {
       console.error('Error in logging in.', error);
@@ -97,7 +72,7 @@ export default function Login(){
 
     <>
     <form>
-    <table className='tableStyle'>
+    <table className='loginFormStyle'>
         <thead>
           <tr>
             <th className="headerStyle" colSpan={2}>Anbhazhagan Poultry Farm</th>
@@ -106,23 +81,32 @@ export default function Login(){
         
         <tbody>
           <tr>
-            <td className="cellStyle" colSpan={2}>
-              <input
+            <td className="subHeaderStyle" colSpan={2}></td>
+          </tr>
+          <tr>
+            <td className="subHeaderStyle" colSpan={2}>
+              <div class="input-container">
+                <label for="username">Username</label>
+                <input
                 type="text"
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-                placeholder='Username..'
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
+              </div> 
+              
             </td>
           </tr>
           <tr>
-            <td className="cellStyle" colSpan={2}>
-              <input
-                type="text"
+            <td className="subHeaderStyle" colSpan={2}>
+              <div class="input-container">
+                <label for="password">Password</label>
+                <input
+                type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder='Password..'
-              />
+                />
+              </div> 
+              
             </td>
           </tr>
           <tr>

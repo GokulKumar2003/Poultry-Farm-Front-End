@@ -12,6 +12,7 @@ export default function DownloadReport(){
   const [downloadLink, setDownloadLink] = useState('');
   const [report, setReport] = useState({})
   const [isReportReady, setIsReportReady] = useState(false);
+  const token = localStorage.getItem("token");
 
   const showToast = (type) => {
     // Dismiss all previous toasts before showing a new one
@@ -102,6 +103,7 @@ export default function DownloadReport(){
                           method: "POST",
                           headers: {
                             "Content-Type": "application/json",
+                            'Authorization': `Bearer ${token}`
                           },
                           body: JSON.stringify(reqMsg),
                         });
@@ -193,6 +195,9 @@ export default function DownloadReport(){
 };
 
 function ReportTable({report}){
+  function handleDownload(){
+    
+  }
   return(
     <>
       <table className='dashboard'>
@@ -233,7 +238,6 @@ function ReportTable({report}){
 }
 
 function ReportTableEntry({reportEntry, i}){
-  console.log(i)
   return(
     <>
     <tr className={(i%2 === 0) ? "even-row" : "odd-row"}>

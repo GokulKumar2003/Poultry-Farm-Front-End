@@ -8,6 +8,11 @@ body {
   line-height: 1.5; /* Better readability */
 }
 
+.input-container {
+  position: relative;
+  display: inline-block;
+}
+
 input, select, button, option {
   font-family: inherit;
   font-size: 1rem;
@@ -15,6 +20,16 @@ input, select, button, option {
   border: 1px solid #ccc;
   border-radius: 5px;
   margin-bottom: 1em;
+}
+
+label {
+  position: absolute;
+  top: -10px;  /* Moves label up */
+  left: 10px;  /* Moves label slightly inside */
+  background: white;
+  padding: 0 5px;
+  font-size: 14px;
+  color: #1E3A8A;
 }
 
 input,
@@ -57,6 +72,17 @@ button:hover {
   border-collapse: collapse;
   width: 100%;
   max-width: 600px; /* Adjust table size */
+  margin: 2em auto;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  color: #374151;
+  border: 2px solid #e2e8f0; 
+}
+
+.loginFormStyle {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 500px; /* Adjust table size */
   margin: 2em auto;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;

@@ -4,7 +4,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function StockUpdate(){
-    const [stockUpdateData, setStockUpdateData] = useState({shedId: 1,
+    
+    const [stockUpdateData, setStockUpdateData] = useState({shedId: 0,
                                                             date: '',
                                                             largeProduction: '',
                                                             smallProduction: '',
@@ -28,6 +29,15 @@ export default function StockUpdate(){
     
     async function handleSubmit(){
       console.log(stockUpdateData);
+
+      if(stockUpdateData.shedId == 0){
+        toast.error("Select a shed..", {
+          position: "top-right",
+          autoClose: 2000,
+          theme: "dark",
+        });
+        return;
+      }
 
       if(stockUpdateData.date === ''){
         toast.error("Enter a valid date..", {
@@ -58,11 +68,12 @@ export default function StockUpdate(){
         theme: "dark",
       });
       try {
-        
+        const token = localStorage.getItem("token");
         await fetch('http://localhost:8080/api/1.0/stocks', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify(stockUpdateData),
           });
@@ -98,6 +109,7 @@ export default function StockUpdate(){
           <tr>
             <td className="subHeaderStyle"> 
               <select  name="shedId" value={stockUpdateData.shedId} onChange={handleChange}>
+                <option value="0">Select Shed</option>
                 <option value="1">Shed 1</option>
                 <option value="2">Shed 2</option>
                 <option value="3">Shed 3</option>
@@ -106,7 +118,9 @@ export default function StockUpdate(){
               </select>
             </td>
             <td className="subHeaderStyle">
-              <input type = "date" className="dateInput" name="date" value={stockUpdateData.date} onChange={handleChange} />
+           
+              <input type = "date" id = "date" className="dateInput" name="date" value={stockUpdateData.date} onChange={handleChange} />
+              
             </td>
           </tr>
           <tr>
@@ -114,49 +128,84 @@ export default function StockUpdate(){
             <td className="subHeaderStyle">Sale</td>
           </tr>
           <tr>
-            <td className="cellStyle"><span>Large</span>
-            <input className = {stockUpdateData.largeProduction === "" | isNaN(stockUpdateData.largeProduction) ? "error_input" : "" }
-              type= " text" name="largeProduction" value={stockUpdateData.largeProduction} onChange={handleChange} />
+            <td className="cellStyle">
+              <div class="input-container">
+                <label for="largeProduction">Large</label>
+                <input className = {stockUpdateData.largeProduction === "" | isNaN(stockUpdateData.largeProduction) ? "error_input" : "" }
+                  type= " text" name="largeProduction" value={stockUpdateData.largeProduction} onChange={handleChange} />
+              </div>
+            
             </td>
-            <td className="cellStyle"><span>Large</span>
-            <input className = {stockUpdateData.largeSale === "" | isNaN(stockUpdateData.largeSale) ? "error_input" : "" } 
-              type= " text" name="largeSale" value={stockUpdateData.largeSale} onChange={handleChange} />
-            </td>
-          </tr>
-          <tr>
-            <td className="cellStyle"><span>Small</span> 
-            <input className = {stockUpdateData.smallProduction === "" | isNaN(stockUpdateData.smallProduction) ? "error_input" : "" } 
-              type= " text" name="smallProduction" value={stockUpdateData.smallProduction} onChange={handleChange} />
-            </td>
-            <td className="cellStyle"><span>Small</span> 
-            <input className = {stockUpdateData.smallSale === "" | isNaN(stockUpdateData.smallSale) ? "error_input" : "" }
-              type= " text" name="smallSale" value={stockUpdateData.smallSale} onChange={handleChange} />
+            <td className="cellStyle">
+              <div class="input-container">
+                <label for="largeSale">Large</label>
+                <input className = {stockUpdateData.largeSale === "" | isNaN(stockUpdateData.largeSale) ? "error_input" : "" } 
+                  type= " text" name="largeSale" value={stockUpdateData.largeSale} onChange={handleChange} />
+              </div>
+            
             </td>
           </tr>
           <tr>
-            <td className="cellStyle"><span>Broken</span> 
-            <input className = {stockUpdateData.brokenProduction === "" | isNaN(stockUpdateData.brokenProduction) ? "error_input" : "" }
+            <td className="cellStyle">
+              <div class="input-container">
+                <label for="smallProduction">Small</label>
+                <input className = {stockUpdateData.smallProduction === "" | isNaN(stockUpdateData.smallProduction) ? "error_input" : "" } 
+                type= " text" name="smallProduction" value={stockUpdateData.smallProduction} onChange={handleChange} />
+              </div> 
+            
+            </td>
+            <td className="cellStyle">
+              <div class="input-container">
+                <label for="smallSale">Small</label>
+                <input className = {stockUpdateData.smallSale === "" | isNaN(stockUpdateData.smallSale) ? "error_input" : "" }
+                  type= " text" name="smallSale" value={stockUpdateData.smallSale} onChange={handleChange} />
+              </div> 
+            </td>
+          </tr>
+          <tr>
+            <td className="cellStyle">
+              <div class="input-container">
+                <label for="brokenProduction">Broken</label>
+                <input className = {stockUpdateData.brokenProduction === "" | isNaN(stockUpdateData.brokenProduction) ? "error_input" : "" }
               type= " text" name="brokenProduction" value={stockUpdateData.brokenProduction} onChange={handleChange} />
+              </div> 
+            
             </td>
-            <td className="cellStyle"><span>Broken</span> 
-            <input className = {stockUpdateData.brokenSale === "" | isNaN(stockUpdateData.brokenSale) ? "error_input" : "" }
+            <td className="cellStyle">
+              <div class="input-container">
+                <label for="brokenSale">Broken</label>
+                <input className = {stockUpdateData.brokenSale === "" | isNaN(stockUpdateData.brokenSale) ? "error_input" : "" }
               type= " text" name="brokenSale" value={stockUpdateData.brokenSale} onChange={handleChange} />
+              </div>  
+            
             </td>
           </tr>
           <tr>
-            <td className="cellStyle"><span>Dirty</span>
-            <input className = {stockUpdateData.dirtyProduction === "" | isNaN(stockUpdateData.dirtyProduction) ? "error_input" : "" }
+            <td className="cellStyle">
+              <div class="input-container">
+                <label for="dirtyProduction">Dirty</label>
+                <input className = {stockUpdateData.dirtyProduction === "" | isNaN(stockUpdateData.dirtyProduction) ? "error_input" : "" }
               type= " text" name="dirtyProduction" value={stockUpdateData.dirtyProduction} onChange={handleChange} />
+              </div> 
+            
             </td>
-            <td className="cellStyle"><span>Dirty</span> 
-            <input className = {stockUpdateData.dirtySale === "" | isNaN(stockUpdateData.dirtySale) ? "error_input" : "" }
+            <td className="cellStyle">
+              <div class="input-container">
+                <label for="dirtySale">Dirty</label>
+                <input className = {stockUpdateData.dirtySale === "" | isNaN(stockUpdateData.dirtySale) ? "error_input" : "" }
               type= " text" name="dirtySale" value={stockUpdateData.dirtySale} onChange={handleChange} />
+              </div> 
+            
             </td>
           </tr>
           <tr>
-            <td className="subHeaderStyle" colSpan={2}><p>Death Cnt</p>
-            <input className = {stockUpdateData.deathCnt === "" | isNaN(stockUpdateData.deathCnt) ? "error_input" : "" }
+            <td className="cellStyle" colSpan={2}>
+              <div class="input-container">
+                <label for="deathCnt">Death Cnt</label>
+                <input className = {stockUpdateData.deathCnt === "" | isNaN(stockUpdateData.deathCnt) ? "error_input" : "" }
               type= " text" name="deathCnt" value={stockUpdateData.deathCnt} onChange={handleChange} />
+            
+              </div> 
             </td>
           </tr>
           <tr>

@@ -8,24 +8,33 @@ export default function Dashboard() {
   const [shedData, setShedData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingErr, setLoadingErr] = useState(false);
+  const token = localStorage.getItem('token');
+  const fetchShedData = async () => {
+    console.log(token);
+    try {
+      const response = await fetch('http://localhost:8080/api/1.0/stocks', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        redirect: "follow"
+    });
+    console.log("Token being sent:", token);
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+      const data = await response.json();
+      setShedData(data);
+    } catch (err) {
+      console.log(err);
+      setLoadingErr(true)
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchShedData = async () => {
-      try {
-        const response = await fetch('http://localhost:8080/api/1.0/stocks');
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        const data = await response.json();
-        setShedData(data);
-      } catch (err) {
-        console.log(err);
-        setLoadingErr(true)
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchShedData();
   }, []);
 
@@ -49,6 +58,8 @@ export default function Dashboard() {
             <td>Error in Loading Stock..</td>
           </tr>
           </table>
+          <Reset />
+          <ToastContainer />
       </>
     )
   }
@@ -122,7 +133,8 @@ function Reset(){
   const [shedId, setShedId] = useState(0);
   const [confirmMsg, setConfirmMsg] = useState("");
   const [batchStartDate, setBatchStartDate] = useState("");
-
+  const token = localStorage.getItem("token");
+  
   async function handleReset(){
 
     if(isNaN(birdsCnt)){
@@ -164,6 +176,7 @@ function Reset(){
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({shedId, birdsCnt, batchStartDate}),
         });
@@ -192,9 +205,8 @@ function Reset(){
         </tr> */}
         <tr>
           <td className="cellStyle">
-              <b><p>Select Shed ID</p></b>
               <select  name="shedId" value={shedId} onChange={(e)=>{setShedId(e.target.value)}}>
-                <option value="0">Shed</option>
+                <option value="0">Select Shed</option>
                 <option value="1">Shed 1</option>
                 <option value="2">Shed 2</option>
                 <option value="3">Shed 3</option>
@@ -203,20 +215,28 @@ function Reset(){
               </select>
           </td>
           <td className="cellStyle">
-            <b><p>No of Birds</p></b>
-            <input type = "text" name="birds" value={birdsCnt} onChange={(e)=>{setBirdsCnt(e.target.value)}} />
+            <div class="input-container">
+              <label for="birds">Birds Cnt</label>
+              <input type = "text" name="birds" value={birdsCnt} onChange={(e)=>{setBirdsCnt(e.target.value)}} />
+            </div>
+            
           </td>
           <td className="cellStyle">
-            <b><p>Batch Start Date</p></b>
-            <input type = "date" name="batch-start-date" value={batchStartDate} onChange={(e)=>{setBatchStartDate(e.target.value)}} />
+            <div class="input-container">
+              <label for="batch-start-date">Batch Start Date</label>
+              <input type = "date" name="batch-start-date" value={batchStartDate} onChange={(e)=>{setBatchStartDate(e.target.value)}} />
+            </div> 
           </td>
         </tr>
         <tr>
           <td className="cellStyle">
-            <span>Type this: <b>shed{shedId}-{birdsCnt}</b></span>
+            <span><b>shed{shedId}-{birdsCnt}</b></span>
           </td>
           <td className="cellStyle">
-            <input autocomplete="off" type = "text" name="birds" value={confirmMsg} onChange={(e)=>{setConfirmMsg(e.target.value)}} placeholder="type here.." />
+            <div class="input-container">
+              <label for="confirmMsg">Confirmation Msg</label>
+              <input autocomplete="off" type = "text" name="confirmMsg" value={confirmMsg} onChange={(e)=>{setConfirmMsg(e.target.value)}} />
+            </div>   
           </td>
           <td className="cellStyle" colSpan={3}>
             <button type="button" onClick={handleReset} >Reset Stock</button>
