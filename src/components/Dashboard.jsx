@@ -12,7 +12,7 @@ export default function Dashboard() {
   const fetchShedData = async () => {
     console.log(token);
     try {
-      const response = await fetch('http://localhost:8080/api/1.0/stocks', {
+      const response = await fetch('AWS_EC2_URL/api/1.0/stocks', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

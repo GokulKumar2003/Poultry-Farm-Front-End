@@ -55,7 +55,7 @@ export default function Login(){
     }
 
     try {
-      const response = await axios.post("http://localhost:8080/api/1.0/auth/login",
+      const response = await axios.post("AWS_EC2_URL/api/1.0/auth/login",
       {username, password},
       {headers: { "Content-Type": "application/json" }});
       localStorage.setItem("token", response.data.token);
