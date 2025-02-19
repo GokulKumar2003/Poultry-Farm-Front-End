@@ -10,8 +10,8 @@ export default function DownloadReport(){
   const [reportType, setReportType] = useState('individual-shed');
   const [shedId, setShedId] = useState(1);
   const [downloadLink, setDownloadLink] = useState('');
+  const [isResponseReady, setIsResponseReady] = useState(false);
   const [report, setReport] = useState({});
-  const [isReportReady, setIsReportReady] = useState(false);
 
   const token = localStorage.getItem("token");
 
@@ -41,6 +41,13 @@ export default function DownloadReport(){
           theme: "dark",
         });
         break;
+      case "null-info":
+        toast.info("No record Found..",{
+          position: "top-right",
+          autoClose: 3000,
+          theme: "dark",
+        });
+        break;
       default:
         toast("This is a default toast.");
     }
@@ -48,7 +55,7 @@ export default function DownloadReport(){
 
   const handleSubmit = async () => { 
     
-    setIsReportReady(false);
+    setIsResponseReady(false);
     const start = new Date(startDate)
     const end = new Date(endDate)
     setDownloadLink('')
@@ -117,10 +124,9 @@ export default function DownloadReport(){
       }
 
       const Report = await response.json();
-
       setReport(Report);
-      setIsReportReady(true);
-      console.log(report);
+      setIsResponseReady(true);
+      showToast("success");
     } catch (error) {
       console.error('Error downloading the report:', error);
       showToast("error")
@@ -192,7 +198,7 @@ export default function DownloadReport(){
         </tbody>
       </table>
       </form>
-      {isReportReady && <ReportTable report={report}/>}
+      {<ReportTable report={report}/>}
       <ToastContainer />
     </>
   );
@@ -203,16 +209,18 @@ function ReportTable({report}){
     
   }
   if(Object.keys(report).length == 0){
-    toast.info("No Record Found..",{
-      position: "top-right",
-      autoClose: 3000,
-      theme: "dark",
-    });
-    return;
+    
+    return(
+      <>
+        <table className='tableStyle'>
+          <tr>
+            <th className="subHeaderStyle">No record Found</th>
+          </tr>
+        </table>
+      </>
+    )
   }
   else {
-
-  showToast("success");
   return(
     <>
       <table className='dashboard'>
