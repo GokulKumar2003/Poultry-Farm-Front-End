@@ -10,8 +10,9 @@ export default function DownloadReport(){
   const [reportType, setReportType] = useState('individual-shed');
   const [shedId, setShedId] = useState(1);
   const [downloadLink, setDownloadLink] = useState('');
-  const [report, setReport] = useState({})
+  const [report, setReport] = useState({});
   const [isReportReady, setIsReportReady] = useState(false);
+
   const token = localStorage.getItem("token");
 
   const showToast = (type) => {
@@ -116,6 +117,7 @@ export default function DownloadReport(){
       }
 
       const Report = await response.json();
+
       setReport(Report);
       setIsReportReady(true);
       console.log(report);
@@ -139,6 +141,9 @@ export default function DownloadReport(){
         </thead>
         
         <tbody>
+          <tr>
+            <td></td>
+          </tr>
           <tr>
             <td className="subHeaderStyle" >Start Date</td>
             <td className="cellStyle" >
@@ -194,9 +199,23 @@ export default function DownloadReport(){
   );
 };
 
+function EmptyReport(){
+  return(
+    <>
+      <table className='tableStyle'>
+        <tr>
+          <th className='subHeaderStyle'>No Records found</th>
+        </tr>
+      </table>
+    </>
+  )
+}
 function ReportTable({report}){
   function handleDownload(){
     
+  }
+  if(Object.keys(report).length == 0){
+    return(<EmptyReport />)
   }
   return(
     <>

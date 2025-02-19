@@ -198,11 +198,11 @@ function Reset(){
   return(
     <>
       <table className="tableStyle">
-        {/* <tr >
+        <tr >
           <td className="subHeaderStyle" colSpan={3}>
               Stock Reset
           </td>
-        </tr> */}
+        </tr>
         <tr>
           <td className="cellStyle">
               <select  name="shedId" value={shedId} onChange={(e)=>{setShedId(e.target.value)}}>
