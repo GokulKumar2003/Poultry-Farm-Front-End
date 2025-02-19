@@ -121,7 +121,6 @@ export default function DownloadReport(){
       setReport(Report);
       setIsReportReady(true);
       console.log(report);
-      showToast("success");
     } catch (error) {
       console.error('Error downloading the report:', error);
       showToast("error")
@@ -199,24 +198,21 @@ export default function DownloadReport(){
   );
 };
 
-function EmptyReport(){
-  return(
-    <>
-      <table className='tableStyle'>
-        <tr>
-          <th className='subHeaderStyle'>No Records found</th>
-        </tr>
-      </table>
-    </>
-  )
-}
 function ReportTable({report}){
   function handleDownload(){
     
   }
   if(Object.keys(report).length == 0){
-    return(<EmptyReport />)
+    toast.info("No Record Found..",{
+      position: "top-right",
+      autoClose: 3000,
+      theme: "dark",
+    });
+    return;
   }
+  else {
+
+  showToast("success");
   return(
     <>
       <table className='dashboard'>
@@ -254,6 +250,7 @@ function ReportTable({report}){
       </table>
     </>
   )
+}
 }
 
 function ReportTableEntry({reportEntry, i}){
