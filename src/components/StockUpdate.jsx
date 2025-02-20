@@ -69,7 +69,7 @@ export default function StockUpdate(){
       });
       try {
         const token = localStorage.getItem("token");
-        await fetch('AWS_EC2_URL/api/1.0/stocks', {
+        await fetch('https://your-backend.up.railway.app/api/1.0/stocks', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

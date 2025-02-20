@@ -12,7 +12,7 @@ export default function Dashboard() {
   const fetchShedData = async () => {
     console.log(token);
     try {
-      const response = await fetch('AWS_EC2_URL/api/1.0/stocks', {
+      const response = await fetch('https://your-backend.up.railway.app/api/1.0/stocks', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -172,7 +172,7 @@ function Reset(){
     }
     try {
      
-      await fetch('AWS_EC2_URL/api/1.0/stocks/reset', {
+      await fetch('https://your-backend.up.railway.app/api/1.0/stocks/reset', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

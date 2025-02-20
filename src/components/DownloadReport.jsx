@@ -104,8 +104,8 @@ export default function DownloadReport(){
       
       const url =
         reportType === "individual-shed"
-        ? "AWS_EC2_URL/api/1.0/reports/shed_report"
-        : "AWS_EC2_URL/api/1.0/reports/overall_report";
+        ? "https://your-backend.up.railway.app/api/1.0/reports/shed_report"
+        : "https://your-backend.up.railway.app/api/1.0/reports/overall_report";
 
       const response = await fetch(url, {
                           method: "POST",
