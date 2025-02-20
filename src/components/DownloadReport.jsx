@@ -104,8 +104,8 @@ export default function DownloadReport(){
       
       const url =
         reportType === "individual-shed"
-        ? "http://localhost:8080/api/1.0/reports/shed_report"
-        : "http://localhost:8080/api/1.0/reports/overall_report";
+        ? "AWS_EC2_URL/api/1.0/reports/shed_report"
+        : "AWS_EC2_URL/api/1.0/reports/overall_report";
 
       const response = await fetch(url, {
                           method: "POST",

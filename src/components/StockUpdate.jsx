@@ -69,7 +69,7 @@ export default function StockUpdate(){
       });
       try {
         const token = localStorage.getItem("token");
-        await fetch('http://localhost:8080/api/1.0/stocks', {
+        await fetch('AWS_EC2_URL/api/1.0/stocks', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

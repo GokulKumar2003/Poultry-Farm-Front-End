@@ -172,7 +172,7 @@ function Reset(){
     }
     try {
      
-      await fetch('http://localhost:8080/api/1.0/stocks/reset', {
+      await fetch('AWS_EC2_URL/api/1.0/stocks/reset', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
