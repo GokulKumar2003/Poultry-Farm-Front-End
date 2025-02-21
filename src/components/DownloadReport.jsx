@@ -206,7 +206,9 @@ export default function DownloadReport(){
 };
 
 function ReportTable({report}){
+
   function handleDownload(){
+    console.log(report);
     var wb = XLSX.utils.book_new(),
     ws = XLSX.utils.json_to_sheet(report);
 
@@ -236,11 +238,11 @@ function ReportTable({report}){
         {report[0].shedId == 0 ? 
           <tr className="report-title">
             <td colSpan={10}>OVERALL REPORT</td>
-            <td colSpan={1}><button><Download size={20} /></button></td>
+            <td colSpan={1}><button onClick={handleDownload}><Download size={20} /></button></td>
           </tr> :
           <tr className="report-title">
             <td colSpan={10}>SHED {report[0].shedId}</td>
-            <td colSpan={1}><button onClick={handleDownload}>Download</button></td>
+            <td colSpan={1}><button onClick={handleDownload}><Download size={20} /></button></td>
           </tr>
         }
         <tr className="dashboard-title">
