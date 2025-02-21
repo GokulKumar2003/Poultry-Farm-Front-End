@@ -104,8 +104,8 @@ export default function DownloadReport(){
       
       const url =
         reportType === "individual-shed"
-        ? "https://your-backend.up.railway.app/api/1.0/reports/shed_report"
-        : "https://your-backend.up.railway.app/api/1.0/reports/overall_report";
+        ? "https://api.anbupf.com/api/1.0/reports/shed_report"
+        : "https://api.anbupf.com/api/1.0/reports/overall_report";
 
       const response = await fetch(url, {
                           method: "POST",
