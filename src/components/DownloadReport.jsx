@@ -219,7 +219,7 @@ function ReportTable({report}){
       sheetname = 'Shed-'+report[0].shedId;
     }
     XLSX.utils.book_append_sheet(wb, ws, sheetname);
-    XLSX.write(wb, filename);
+    XLSX.writeFile(wb, filename);
   }
   if(Object.keys(report).length == 0){
     
