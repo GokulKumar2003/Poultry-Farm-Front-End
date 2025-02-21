@@ -199,7 +199,7 @@ export default function DownloadReport(){
         </tbody>
       </table>
       </form>
-      {<ReportTable report={report}/>}
+      {isResponseReady && <ReportTable report={report}/>}
       <ToastContainer />
     </>
   );
