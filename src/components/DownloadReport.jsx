@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import '../styles/style.css'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import * as XLSX from "xlsx"; // ✅ Correct
+import { Download } from 'lucide-react';
 
 export default function DownloadReport(){
   const [startDate, setStartDate] = useState('');
@@ -206,7 +207,15 @@ export default function DownloadReport(){
 
 function ReportTable({report}){
   function handleDownload(){
-    
+    var wb = XLSX.utils.book_new(),
+    ws = XLSX.utils.json_to_sheet(report);
+
+    var filename = 'overall-report';
+    if(report[0].shedId !== 0){
+      filename = 'Shed-'+report[0].shedId;
+    }
+    XLSX.utils.book_append_sheet(wb, ws, filename);
+    XLSX.write(wb, filename);
   }
   if(Object.keys(report).length == 0){
     
@@ -227,7 +236,7 @@ function ReportTable({report}){
         {report[0].shedId == 0 ? 
           <tr className="report-title">
             <td colSpan={10}>OVERALL REPORT</td>
-            <td colSpan={1}><button>Download</button></td>
+            <td colSpan={1}><button><Download size={20} /></button></td>
           </tr> :
           <tr className="report-title">
             <td colSpan={10}>SHED {report[0].shedId}</td>
