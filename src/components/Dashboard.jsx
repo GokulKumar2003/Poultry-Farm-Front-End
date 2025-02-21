@@ -104,7 +104,7 @@ function Shed({shed}) {
 
   const days = Math.floor(Math.abs(new Date() - currentDate)/(1000*60*60*24));
   const age = Math.floor(days/7);
-  const percentage = (shed.productionRatio.toFixed(4))*100;
+  const percentage = (shed.productionRatio.toFixed(4));
 
   const formattedDate = `${day}-${month}-${year}`;
   return (
