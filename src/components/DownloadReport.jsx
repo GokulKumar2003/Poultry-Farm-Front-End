@@ -212,11 +212,13 @@ function ReportTable({report}){
     var wb = XLSX.utils.book_new(),
     ws = XLSX.utils.json_to_sheet(report);
 
-    var filename = 'overall-report';
+    var filename = 'overall-report.xlsx';
+    var sheetname = 'overall-report'
     if(report[0].shedId !== 0){
-      filename = 'Shed-'+report[0].shedId;
+      filename = 'Shed-'+report[0].shedId+'.xlsx';
+      sheetname = 'Shed-'+report[0].shedId;
     }
-    XLSX.utils.book_append_sheet(wb, ws, filename);
+    XLSX.utils.book_append_sheet(wb, ws, sheetname);
     XLSX.write(wb, filename);
   }
   if(Object.keys(report).length == 0){
