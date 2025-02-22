@@ -1,16 +1,17 @@
 /* Base Styles */
 body {
   font-family: 'Collins', sans-serif;
-  font-size: 1rem; /* Base font size */
+  font-size: 1rem;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  line-height: 1.5; /* Better readability */
+  line-height: 1.5;
 }
 
 .input-container {
   position: relative;
   display: inline-block;
+  width: 100%;
 }
 
 input, select, button, option {
@@ -20,25 +21,19 @@ input, select, button, option {
   border: 1px solid #ccc;
   border-radius: 5px;
   margin-bottom: 1em;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 label {
   position: absolute;
-  top: -10px;  /* Moves label up */
-  left: 10px;  /* Moves label slightly inside */
+  top: -8px;
+  left: 8px;
   background: white;
   padding: 0 5px;
   font-size: 14px;
   color: #1E3A8A;
-}
-
-input,
-.error_input,
-select {
-  width: 100%; /* Full width for responsiveness */
-  max-width: 400px;
-  text-align: center;
-  box-sizing: border-box;
 }
 
 .error_input {
@@ -46,7 +41,6 @@ select {
 }
 
 button {
-  width: auto; /* Flexible width */
   background-color: #374151;
   color: white;
   font-size: 1rem;
@@ -68,65 +62,27 @@ button:hover {
   box-sizing: border-box;
 }
 
-.tableStyle {
+.tableStyle, .dashboard, .loginFormStyle {
   border-collapse: collapse;
   width: 100%;
-  max-width: 600px; /* Adjust table size */
+  max-width: 100%;
   margin: 2em auto;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  overflow-x: auto;
   color: #374151;
-  border: 2px solid #e2e8f0; 
+  border: 2px solid #e2e8f0;
 }
 
-.loginFormStyle {
-  border-collapse: collapse;
-  width: 100%;
-  max-width: 500px; /* Adjust table size */
-  margin: 2em auto;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  color: #374151;
-  border: 2px solid #e2e8f0; 
-}
-
-.dashboard {
-  border-collapse: collapse;
-  width: 100%;
-  max-width: 1100px; /* Adjust table size */
-  margin: 2em auto;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  color: #374151;
-}
-
-.tableStyle td,
-.dashboard td {
+.tableStyle td, .dashboard td {
   padding: 0.75em;
+  text-align: center;
 }
 
-.headerStyle {
+.headerStyle, .dashboard-title, .report-title {
   padding: 1em;
   text-align: center;
   background-color: #374151;
   color: #fff;
-  font-weight: bold;
-  font-size: 1.25rem;
-}
-
-.dashboard-title {
-  padding: 1em;
-  text-align: center;
-  background-color: #374151;
-  color: #fff;
-  font-weight: bold;
-  font-size: 1rem;
-}
-
-.report-title {
-  padding: 1em;
-  text-align: center;
-  color: #374151;
   font-weight: bold;
   font-size: 1rem;
 }
@@ -141,48 +97,40 @@ button:hover {
   padding: 0.75em;
   text-align: center;
   font-weight: bold;
-  font-size: 1.25rem;
+  font-size: 1rem;
 }
 
 .even-row {
-  background-color: #f1f5f9; /* Light background for even rows */
+  background-color: #f1f5f9;
 }
 
 .odd-row {
-  background-color: #e2e8f0; /* Slightly darker background for odd rows */
+  background-color: #e2e8f0;
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-  .tableStyle, .dashboard {
-      font-size: 0.9rem;
-  }
-
   .headerStyle, .dashboard-title {
-      font-size: 1.25rem;
+      font-size: 1rem;
   }
 }
 
 @media (max-width: 768px) {
   input, select, button {
-      width: 100%; /* Full width for smaller screens */
+      width: 100%;
   }
 
   .tableStyle, .dashboard {
       font-size: 0.85rem;
-      overflow-x: auto; /* Allow horizontal scroll */
+      overflow-x: auto;
   }
 
   .headerStyle, .dashboard-title {
-      font-size: 1rem;
-  }
-
-  .subHeaderStyle {
       font-size: 0.9rem;
   }
 
-  .navbar-links {
-      font-size: 0.9rem; /* Reduce navbar link size */
+  .subHeaderStyle {
+      font-size: 0.85rem;
   }
 }
 
@@ -190,7 +138,7 @@ button:hover {
 .navbar {
   background-color: #1E3A8A;
   color: white;
-  padding: .2rem 2rem;
+  padding: 0.5rem 1rem;
 }
 
 .navbar-container {
@@ -200,7 +148,7 @@ button:hover {
 }
 
 .navbar-logo {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: bold;
 }
 
@@ -210,12 +158,12 @@ button:hover {
 }
 
 .navbar-links li {
-  margin: 0 1rem;
+  margin: 0 0.75rem;
 }
 
 .navbar-links a {
   color: white;
-  font-size: 1.25rem;
+  font-size: 1rem;
   transition: color 0.3s;
   text-decoration: none;
 }
@@ -250,7 +198,6 @@ button:hover {
       display: none;
       flex-direction: column;
       position: absolute;
-      /* top: 60px; */
       right: 0;
       width: 100%;
       background-color: #1E3A8A;

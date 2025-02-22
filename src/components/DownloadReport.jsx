@@ -5,12 +5,75 @@ import "react-toastify/dist/ReactToastify.css";
 import * as XLSX from "xlsx"; // ✅ Correct
 import { Download } from 'lucide-react';
 
+function DeleteRecord(){
+
+  const [confirmMsg, setConfirmMsg] = useState("");
+  const token = localStorage.getItem("token");
+  
+  async function handleDeleteRecord(){
+
+    if(confirmMsg !== 'delete'){
+      toast.error("Type the correct msg..", {
+        position: "top-right",
+        autoClose: 2000,
+        theme: "dark",
+      });
+      return;
+    }
+    try {
+     
+      await fetch('https://api.anbupf.com/api/1.0/reports/delete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        });
+        toast.success("Records deleted..", {
+          position: "top-right",
+          autoClose: 3000,
+          theme: "dark",
+        });
+    }
+    catch(err){
+      console.log(err);
+      toast.error("Error in deleting..", {
+        position: "top-right",
+        autoClose: 3000,
+        theme: "dark",
+      });
+    }
+  }
+  return(
+    <>
+      <table className="tableStyle">
+        <tr >
+          <td className="subHeaderStyle" colSpan={2}>
+              Record Delete
+          </td>
+        </tr>
+        <tr>
+          <td className="cellStyle" colSpan={2}>Note: This will delete all sales and production history permanently.</td>
+        </tr>
+        <tr>
+          <td className="cellStyle">
+            <input placeholder = "Type 'delete'" autocomplete="off" type = "text" name="confirmMsg" value={confirmMsg} onChange={(e)=>{setConfirmMsg(e.target.value)}} />   
+          </td>
+          <td className="cellStyle">
+            <button type="button" onClick={handleDeleteRecord} >Delete Record</button>
+          </td>
+        </tr>
+      </table>
+    </>
+  )
+}
+
+
 export default function DownloadReport(){
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [reportType, setReportType] = useState('individual-shed');
   const [shedId, setShedId] = useState(1);
-  const [downloadLink, setDownloadLink] = useState('');
   const [isResponseReady, setIsResponseReady] = useState(false);
   const [report, setReport] = useState({});
 
@@ -59,7 +122,6 @@ export default function DownloadReport(){
     setIsResponseReady(false);
     const start = new Date(startDate)
     const end = new Date(endDate)
-    setDownloadLink('')
     if(startDate === ''){
       toast.error("Select Start Date..", {
         position: "top-right",
@@ -138,6 +200,7 @@ export default function DownloadReport(){
   return (
 
     <>
+    <DeleteRecord />
     <form>
     <table className='tableStyle'>
         <thead>
