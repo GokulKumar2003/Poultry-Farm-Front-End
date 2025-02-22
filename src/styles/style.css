@@ -100,6 +100,16 @@ button:hover {
   color: #374151;
 }
 
+.chick-dashboard {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 700px; /* Adjust table size */
+  margin: 2em auto;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  color: #374151;
+}
+
 .tableStyle td,
 .dashboard td {
   padding: 0.75em;
@@ -119,6 +129,31 @@ button:hover {
   text-align: center;
   background-color: #374151;
   color: #fff;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.dashboard-subheader {
+  padding: 1em;
+  text-align: center;
+  color: #374151;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.chick-dashboard-title {
+  padding: 1em;
+  text-align: center;
+  background-color: #374151;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.chick-dashboard-subheader {
+  padding: 1em;
+  text-align: center;
+  color: #374151;
   font-weight: bold;
   font-size: 1rem;
 }

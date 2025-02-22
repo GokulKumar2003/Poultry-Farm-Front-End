@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function StockUpdate(){
     
-    const [stockUpdateData, setStockUpdateData] = useState({shedId: 0,
+    const [stockUpdateData, setStockUpdateData] = useState({shedId: '',
                                                             date: '',
                                                             largeProduction: '',
                                                             smallProduction: '',
@@ -67,15 +67,24 @@ export default function StockUpdate(){
         autoClose: 1000,
         theme: "dark",
       });
+      var api = 'https://api.anbupf.com/api/1.0/stocks/layer-update';
+      if(stockUpdateData.shedId.includes("chick")){
+          api = 'https://api.anbupf.com/api/1.0/stocks/chick-update';
+      }
+      else if(stockUpdateData.shedId.includes("grower")){
+          api = 'https://api.anbupf.com/api/1.0/stocks/grower-update'
+      }
+      const reqBodyData = { ...stockUpdateData, shedId: Number(stockUpdateData.shedId.slice(-1))};
+      console.log(reqBodyData);
       try {
         const token = localStorage.getItem("token");
-        await fetch('https://api.anbupf.com/api/1.0/stocks', {
+        await fetch(api, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
           },
-          body: JSON.stringify(stockUpdateData),
+          body: JSON.stringify(reqBodyData),
           });
 
           toast.success("Update successful..", {
@@ -110,11 +119,14 @@ export default function StockUpdate(){
             <td className="subHeaderStyle"> 
               <select  name="shedId" value={stockUpdateData.shedId} onChange={handleChange}>
                 <option value="0">Select Shed</option>
-                <option value="1">Shed 1</option>
-                <option value="2">Shed 2</option>
-                <option value="3">Shed 3</option>
-                <option value="4">Shed 4</option>
-                <option value="5">Shed 5</option>
+                <option value="layer1">Shed 1</option>
+                <option value="layer2">Shed 2</option>
+                <option value="layer3">Shed 3</option>
+                <option value="layer4">Shed 4</option>
+                <option value="layer5">Shed 5</option>
+                <option value="chick1">Chick 1</option>
+                <option value="grower1">Grower 1</option>
+                <option value="grower2">Grower 2</option>
               </select>
             </td>
             <td className="subHeaderStyle">

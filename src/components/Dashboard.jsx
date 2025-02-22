@@ -6,32 +6,60 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Dashboard() {
   const [shedData, setShedData] = useState([]);
+  const [chickData, setChickData] = useState([]);
+  const [growerData, setGrowerData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingErr, setLoadingErr] = useState(false);
   const token = localStorage.getItem('token');
   const fetchShedData = async () => {
-    console.log(token);
     try {
-      const response = await fetch('https://api.anbupf.com/api/1.0/stocks', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        },
-        redirect: "follow"
-    });
-    console.log("Token being sent:", token);
-      if (!response.ok) {
-        throw new Error('Failed to fetch data');
+      const [layerResponse, chickResponse, growerResponse] = await Promise.all([
+          fetch('https://api.anbupf.com/api/1.0/stocks/layer', {
+              method: 'GET',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`
+              },
+              redirect: "follow"
+          }),
+          fetch('https://api.anbupf.com/api/1.0/stocks/chick', {
+              method: 'GET',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`
+              },
+              redirect: "follow"
+          }),
+          fetch('https://api.anbupf.com/api/1.0/stocks/grower', {
+              method: 'GET',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`
+              },
+              redirect: "follow"
+          })
+      ]);
+
+      if (!layerResponse.ok || !chickResponse.ok || !growerResponse.ok) {
+          throw new Error('Failed to fetch stock');
       }
-      const data = await response.json();
-      setShedData(data);
-    } catch (err) {
-      console.log(err);
-      setLoadingErr(true)
-    } finally {
+
+      const [layerData, chickData, growerData] = await Promise.all([
+          layerResponse.json(),
+          chickResponse.json(),
+          growerResponse.json()
+      ]);
+
+      setShedData(layerData);
+      setChickData(chickData);
+      setGrowerData(growerData);
+
+  } catch (err) {
+      console.error(err);
+      setLoadingErr(true);
+  } finally {
       setLoading(false);
-    }
+  }
   };
 
   useEffect(() => {
@@ -66,6 +94,9 @@ export default function Dashboard() {
   return (
       <>
         <table className="dashboard">
+          <tr>
+            <td className="dashboard-title" colSpan={9}>LAYER</td>
+          </tr>
           <tr className="dashboard-title">
             <td>SHED ID</td>
             <td>START DATE</td>
@@ -74,17 +105,16 @@ export default function Dashboard() {
             <td>SMALL</td>
             <td>BROKEN</td>
             <td>DIRTY</td>
-            <td>PROD. %</td>
             <td>BIRDS</td>
             <td>DEATH</td>
-            
-
           </tr>
             {shedData.map((shed) => (
                 <Shed shed={shed} key={shed.shedId}/>
             ))}
          
         </table>
+        <Chick chickData={chickData}/>
+        <Grower growerData={growerData}/>
         <Reset />
         <ToastContainer />
       </>
@@ -95,7 +125,6 @@ export default function Dashboard() {
 
 function Shed({shed}) {
 
-  console.log(shed)
   const currentDate = new Date(shed.batchStartDate); 
 
   const day = currentDate.getDate().toString().padStart(2, '0'); 
@@ -104,7 +133,6 @@ function Shed({shed}) {
 
   const days = Math.floor(Math.abs(new Date() - currentDate)/(1000*60*60*24));
   const age = Math.floor(days/7);
-  const percentage = (shed.productionRatio.toFixed(1));
 
   const formattedDate = `${day}-${month}-${year}`;
   return (
@@ -117,8 +145,108 @@ function Shed({shed}) {
         <td className="dashboard-cell">{shed.small}</td>
         <td className="dashboard-cell">{shed.broken}</td>
         <td className="dashboard-cell">{shed.dirty}</td>
-        <td className="dashboard-cell">{percentage}</td>
 
+        <td className="dashboard-cell">{shed.birdsCnt}</td>
+        <td className="dashboard-cell">{shed.deathCnt}</td>
+        
+      </tr>
+    </>
+  )
+}
+
+
+function Chick({chickData}){
+  return (
+    <>
+      <table className="chick-dashboard">
+        <tr>
+          <td className="chick-dashboard-title" colSpan={5}>CHICK</td>
+        </tr>
+        <tr className="chick-dashboard-title">
+          <td>SHED ID</td>
+          <td>START DATE</td>
+          <td>BATCH AGE</td>
+          <td>BIRDS</td>
+          <td>DEATH</td>
+        </tr>
+          {chickData.map((shed) => (
+              <ChickShed shed={shed} key={shed.shedId}/>
+          ))}
+       
+      </table>
+    </>
+    
+
+);
+}
+
+function ChickShed({shed}){
+  const currentDate = new Date(shed.batchStartDate); 
+
+  const day = currentDate.getDate().toString().padStart(2, '0'); 
+  const month = currentDate.toLocaleString('default', { month: 'short' }); 
+  const year = currentDate.getFullYear();
+
+  const days = Math.floor(Math.abs(new Date() - currentDate)/(1000*60*60*24));
+  const age = Math.floor(days/7);
+
+  const formattedDate = `${day}-${month}-${year}`;
+  return (
+    <>
+      <tr className={(shed.shedId%2) ? "even-row" : "odd-row"}>
+        <td className="dashboard-cell">Chick {shed.shedId}</td>
+        <td className="dashboard-cell">{formattedDate}</td>
+        <td className="dashboard-cell">{days < 7 ? days <= 1 ? `${days} day` : `${days} days` : age <= 1 ? `${age} week` : `${age} weeks`} </td>
+        <td className="dashboard-cell">{shed.birdsCnt}</td>
+        <td className="dashboard-cell">{shed.deathCnt}</td>
+        
+      </tr>
+    </>
+  )
+}
+
+function Grower({growerData}){
+  return (
+    <>
+      <table className="chick-dashboard">
+        <tr>
+          <td className="chick-dashboard-title" colSpan={5}>GROWER</td>
+        </tr>
+        <tr className="chick-dashboard-title">
+          <td>SHED ID</td>
+          <td>START DATE</td>
+          <td>BATCH AGE</td>
+          <td>BIRDS</td>
+          <td>DEATH</td>
+        </tr>
+          {growerData.map((shed) => (
+              <GrowerShed shed={shed} key={shed.shedId}/>
+          ))}
+       
+      </table>
+    </>
+    
+
+);
+}
+
+function GrowerShed({shed}){
+  const currentDate = new Date(shed.batchStartDate); 
+
+  const day = currentDate.getDate().toString().padStart(2, '0'); 
+  const month = currentDate.toLocaleString('default', { month: 'short' }); 
+  const year = currentDate.getFullYear();
+
+  const days = Math.floor(Math.abs(new Date() - currentDate)/(1000*60*60*24));
+  const age = Math.floor(days/7);
+
+  const formattedDate = `${day}-${month}-${year}`;
+  return (
+    <>
+      <tr className={(shed.shedId%2) ? "even-row" : "odd-row"}>
+        <td className="dashboard-cell">Grower {shed.shedId}</td>
+        <td className="dashboard-cell">{formattedDate}</td>
+        <td className="dashboard-cell">{days < 7 ? days <= 1 ? `${days} day` : `${days} days` : age <= 1 ? `${age} week` : `${age} weeks`} </td>
         <td className="dashboard-cell">{shed.birdsCnt}</td>
         <td className="dashboard-cell">{shed.deathCnt}</td>
         
@@ -130,7 +258,7 @@ function Shed({shed}) {
 function Reset(){
 
   const [birdsCnt, setBirdsCnt] = useState('');
-  const [shedId, setShedId] = useState(0);
+  const [shedName, setShedName] = useState('');
   const [confirmMsg, setConfirmMsg] = useState("");
   const [batchStartDate, setBatchStartDate] = useState("");
   const token = localStorage.getItem("token");
@@ -145,7 +273,7 @@ function Reset(){
       });
       return;
     }
-    if(shedId == 0){
+    if(shedName === ''){
       toast.error("Select shed..", {
         position: "top-right",
         autoClose: 2000,
@@ -162,7 +290,7 @@ function Reset(){
       });
       return;
     }
-    if(confirmMsg !== ("shed"+shedId+"-"+birdsCnt)){
+    if(confirmMsg !== (""+shedName+"-"+birdsCnt)){
       toast.error("Type the correct msg..", {
         position: "top-right",
         autoClose: 2000,
@@ -170,9 +298,16 @@ function Reset(){
       });
       return;
     }
+    var api = 'https://api.anbupf.com/api/1.0/stocks/layer-reset';
+    if(shedName.includes("chick")){
+        api = 'https://api.anbupf.com/api/1.0/stocks/chick-reset';
+    }
+    else if(shedName.includes("grower")){
+        api = 'https://api.anbupf.com/api/1.0/stocks/grower-reset'
+    }
+    const shedId = Number(shedName.slice(-1));
     try {
-     
-      await fetch('https://api.anbupf.com/api/1.0/stocks/reset', {
+      await fetch(api, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -205,13 +340,16 @@ function Reset(){
         </tr>
         <tr>
           <td className="cellStyle">
-              <select  name="shedId" value={shedId} onChange={(e)=>{setShedId(e.target.value)}}>
+              <select  name="shedName" value={shedName} onChange={(e)=>{setShedName(e.target.value)}}>
                 <option value="0">Select Shed</option>
-                <option value="1">Shed 1</option>
-                <option value="2">Shed 2</option>
-                <option value="3">Shed 3</option>
-                <option value="4">Shed 4</option>
-                <option value="5">Shed 5</option>
+                <option value="layer1">Shed 1</option>
+                <option value="layer2">Shed 2</option>
+                <option value="layer3">Shed 3</option>
+                <option value="layer4">Shed 4</option>
+                <option value="layer5">Shed 5</option>
+                <option value="chick1">Chick 1</option>
+                <option value="grower1">Grower 1</option>
+                <option value="grower2">Gower 2</option>
               </select>
           </td>
           <td className="cellStyle">
@@ -230,7 +368,7 @@ function Reset(){
         </tr>
         <tr>
           <td className="cellStyle">
-            <span><b>shed{shedId}-{birdsCnt}</b></span>
+            <span><b>{shedName}-{birdsCnt}</b></span>
           </td>
           <td className="cellStyle">
             <div class="input-container">
