@@ -179,6 +179,16 @@ button:hover {
   font-size: 1.25rem;
 }
 
+.downloadlink {
+  text-decoration: none;
+  color: blue;
+}
+
+.downloadlink:hover {
+  cursor: pointer;
+  color: red;
+}
+
 .even-row {
   background-color: #f1f5f9; /* Light background for even rows */
 }

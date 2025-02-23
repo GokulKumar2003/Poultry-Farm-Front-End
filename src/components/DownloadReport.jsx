@@ -4,34 +4,49 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import * as XLSX from "xlsx"; // ✅ Correct
 import { Download } from 'lucide-react';
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 function DeleteRecord(){
 
   const [confirmMsg, setConfirmMsg] = useState("");
+  const [shed, setShed] = useState("");
   const token = localStorage.getItem("token");
   
   async function handleDeleteRecord(){
 
-    if(confirmMsg !== 'delete'){
+    if(shed == 0) {
+      toast.error("Select shed..", {
+        position: "top-right",
+        autoClose: 1000,
+        theme: "dark",
+      });
+      return;
+    }
+    if(confirmMsg !== ''+shed+'-delete'){
       toast.error("Type the correct msg..", {
         position: "top-right",
-        autoClose: 2000,
+        autoClose: 1000,
         theme: "dark",
       });
       return;
     }
     try {
-     
+      var shedId = Number(shed.slice(-1));
+      if(shed === "all"){
+        shedId = 0;
+      }
       await fetch('https://api.anbupf.com/api/1.0/reports/delete', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
+        body: JSON.stringify({shedId}),
         });
         toast.success("Records deleted..", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 1000,
           theme: "dark",
         });
     }
@@ -39,7 +54,7 @@ function DeleteRecord(){
       console.log(err);
       toast.error("Error in deleting..", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 1000,
         theme: "dark",
       });
     }
@@ -53,13 +68,29 @@ function DeleteRecord(){
           </td>
         </tr>
         <tr>
-          <td className="cellStyle" colSpan={2}>Note: This will delete all sales and production history permanently.</td>
+          <td className="cellStyle" colSpan={2}>
+            <p>Note: This will delete all sales and production history permanently.</p>
+            <p>Confirmation Msg: <b>{""+shed+"-delete"}</b></p>
+          </td>
         </tr>
         <tr>
-          <td className="cellStyle">
-            <input placeholder = "Type 'delete'" autocomplete="off" type = "text" name="confirmMsg" value={confirmMsg} onChange={(e)=>{setConfirmMsg(e.target.value)}} />   
+        <td className="cellStyle">
+              <select name="shed" value={shed} onChange={(e)=>{setShed(e.target.value)}}>
+                <option value="0">Select Shed</option>
+                <option value="all">All Shed</option>
+                <option value="shed1">Shed 1</option>
+                <option value="shed2">Shed 2</option>
+                <option value="shed3">Shed 3</option>
+                <option value="shed4">Shed 4</option>
+                <option value="shed5">Shed 5</option>
+              </select>
           </td>
           <td className="cellStyle">
+            <input placeholder = "Confirmation msg.." autocomplete="off" type = "text" name="confirmMsg" value={confirmMsg} onChange={(e)=>{setConfirmMsg(e.target.value)}} />   
+          </td>
+          </tr>
+          <tr>
+          <td className="cellStyle" colSpan={2}>
             <button type="button" onClick={handleDeleteRecord} >Delete Record</button>
           </td>
         </tr>
@@ -87,28 +118,28 @@ export default function DownloadReport(){
       case "success":
         toast.success("Report generated..",{
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 1000,
           theme: "dark",
         });
         break;
       case "error":
         toast.error("Error in fetching..",{
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 1000,
           theme: "dark",
         });
         break;
       case "info":
         toast.info("Generating the report..",{
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 1000,
           theme: "dark",
         });
         break;
       case "null-info":
         toast.info("No record Found..",{
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 1000,
           theme: "dark",
         });
         break;
@@ -125,7 +156,7 @@ export default function DownloadReport(){
     if(startDate === ''){
       toast.error("Select Start Date..", {
         position: "top-right",
-        autoClose: 2000,
+        autoClose: 1000,
         theme: "dark",
       });
       return;
@@ -133,7 +164,7 @@ export default function DownloadReport(){
     if(endDate === ''){
       toast.error("Select End Date", {
         position: "top-right",
-        autoClose: 2000,
+        autoClose: 1000,
         theme: "dark",
       });
       return;
@@ -141,7 +172,7 @@ export default function DownloadReport(){
     if(end < start){
       toast.error("Enter valid Range..", {
         position: "top-right",
-        autoClose: 2000,
+        autoClose: 1000,
         theme: "dark",
       });
       return;
@@ -149,7 +180,7 @@ export default function DownloadReport(){
     if((end - start)/(1000*60*60*24) > 31){
       toast.error("Select range max of 30 days..", {
         position: "top-right",
-        autoClose: 2000,
+        autoClose: 1000,
         theme: "dark",
       });
       return;
@@ -284,8 +315,73 @@ function ReportTable({report}){
     XLSX.utils.book_append_sheet(wb, ws, sheetname);
     XLSX.writeFile(wb, filename);
   }
-  if(Object.keys(report).length == 0){
+
+  function handlePDFDownload(){
+    const doc = new jsPDF();
+  
+    // Define table headers based on JSON keys
+    var headers;
+    if(report[0].shedId === 0){
+      headers = Object.keys(report[0]).slice(1);
+    }
+    else{
+      headers = Object.keys(report[0]); 
+    }
+    // Convert JSON data to an array of arrays
+    const data = report.map((item) => headers.map((header) => item[header]));
     
+    var title = 'Overall Report';
+    var filename = 'Overall_Report.pdf';
+    if(report[0].shedId !== 0){
+      filename = 'Shed-'+report[0].shedId+'.pdf';
+      title = 'Shed '+report[0].shedId;
+    }
+
+    // Add title
+    doc.text(title, 14, 10);
+  
+    // Generate table
+    doc.autoTable({
+      head: [headers],
+      body: data,
+      startY: 20,
+      didParseCell: function (data) {
+        if (data.section === "head") {
+          // Header row styling
+          data.cell.styles.fillColor = [55, 65, 81];
+          data.cell.styles.textColor = [255, 255, 255];
+          data.cell.styles.fontStyle = "bold";
+        } else {
+          // Alternate row styling for better readability
+          if (data.row.index % 2 === 0) {
+            data.cell.styles.fillColor = [241, 245, 249];
+          } else {
+            data.cell.styles.fillColor = [226, 232, 240];
+          }
+        }
+      },
+      columnStyles: {
+        0: { cellWidth: "auto" },
+        1: { cellWidth: "auto" },  
+        2: { cellWidth: "auto" },
+        3: { cellWidth: "auto" },
+        4: { cellWidth: "auto" },
+        5: { cellWidth: "auto" },
+        6: { cellWidth: "auto" },
+        7: { cellWidth: "auto" },
+        8: { cellWidth: "auto" },
+        9: { cellWidth: "auto" },
+        10: { cellWidth: "auto" },
+        11: { cellWidth: "auto" },
+        12: { cellWidth: "auto" },
+      },
+      styles: { overflow: "linebreak" },
+    });
+  
+    // Save the PDF
+    doc.save(filename);
+  };
+  if(Object.keys(report).length == 0){
     return(
       <>
         <table className='tableStyle'>
@@ -300,22 +396,23 @@ function ReportTable({report}){
   return(
     <>
       <table className='dashboard'>
-        {report[0].shedId == 0 ? 
-          <tr className="report-title">
-            <td colSpan={10}>OVERALL REPORT</td>
-            <td colSpan={1}><button onClick={handleDownload}><Download size={20} /></button></td>
-          </tr> :
-          <tr className="report-title">
-            <td colSpan={10}>SHED {report[0].shedId}</td>
-            <td colSpan={1}><button onClick={handleDownload}><Download size={20} /></button></td>
+        
+          <tr>
+             <td className='dashboard-cell'><a className="downloadlink" onClick={handleDownload}><Download size={20} />Export to Excel</a></td>
+              {report[0].shedId == 0 ? 
+                <td className='dashboard-cell' colSpan={10}><b>OVERALL REPORT</b></td> :
+                <td className='dashboard-cell' colSpan={10}><b>SHED {report[0].shedId}</b></td>
+              }
+             <td className='dashboard-cell'><a className="downloadlink" onClick={handlePDFDownload}><Download size={20} />Export to PDF</a></td>
           </tr>
-        }
+        
         <tr className="dashboard-title">
           <td rowSpan={2}>DATE</td>
           <td colSpan={4}>PRODUCTION</td>
           <td colSpan={4}>SALE</td>
           <td rowSpan={2}>DEATH</td>
           <td rowSpan={2}>PROD. %</td>
+          <td rowSpan={2}>Death %</td>
         </tr>
         <tr className="dashboard-title">
           <td>Large</td>
@@ -352,8 +449,7 @@ function ReportTableEntry({reportEntry, i}){
       <td className='dashboard-cell'>{reportEntry.dirtySale}</td>
       <td className='dashboard-cell'>{reportEntry.death}</td>
       <td className='dashboard-cell'>{reportEntry.productionRatio}</td>
-
-
+      <td className='dashboard-cell'>{reportEntry.deathPercentage}</td>
     </tr>
   </>
   )
