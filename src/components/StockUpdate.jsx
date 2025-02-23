@@ -126,7 +126,6 @@ export default function StockUpdate(){
                 <option value="layer5">Shed 5</option>
                 <option value="chick1">Chick 1</option>
                 <option value="grower1">Grower 1</option>
-                <option value="grower2">Grower 2</option>
               </select>
             </td>
             <td className="subHeaderStyle">
