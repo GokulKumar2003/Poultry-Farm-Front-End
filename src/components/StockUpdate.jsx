@@ -33,7 +33,7 @@ export default function StockUpdate(){
       if(stockUpdateData.shedId == 0){
         toast.error("Select a shed..", {
           position: "top-right",
-          autoClose: 2000,
+          autoClose: 1000,
           theme: "dark",
         });
         return;
@@ -42,7 +42,7 @@ export default function StockUpdate(){
       if(stockUpdateData.date === ''){
         toast.error("Enter a valid date..", {
           position: "top-right",
-          autoClose: 2000,
+          autoClose: 1000,
           theme: "dark",
         });
         return;
@@ -55,7 +55,7 @@ export default function StockUpdate(){
         isNaN(stockUpdateData.deathCnt)){
           toast.error("Enter valid value..", {
             position: "top-right",
-            autoClose: 2000,
+            autoClose: 1000,
             theme: "dark",
           });
           return;
@@ -89,7 +89,7 @@ export default function StockUpdate(){
 
           toast.success("Update successful..", {
             position: "top-right",
-            autoClose: 3000,
+            autoClose: 1000,
             theme: "dark",
           });
       }
@@ -97,7 +97,7 @@ export default function StockUpdate(){
         console.log(err);
         toast.error("Error in Updating..", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 1000,
           theme: "dark",
         });
       }

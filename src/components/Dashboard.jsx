@@ -268,7 +268,7 @@ function Reset(){
     if(isNaN(birdsCnt)){
       toast.error("Enter valid birds cnt..", {
         position: "top-right",
-        autoClose: 2000,
+        autoClose: 1000,
         theme: "dark",
       });
       return;
@@ -276,7 +276,7 @@ function Reset(){
     if(shedName === ''){
       toast.error("Select shed..", {
         position: "top-right",
-        autoClose: 2000,
+        autoClose: 1000,
         theme: "dark",
       });
       return;
@@ -285,7 +285,7 @@ function Reset(){
     if(batchStartDate === ""){
       toast.error("Select Date..", {
         position: "top-right",
-        autoClose: 2000,
+        autoClose: 1000,
         theme: "dark",
       });
       return;
@@ -293,7 +293,7 @@ function Reset(){
     if(confirmMsg !== (""+shedName+"-"+birdsCnt)){
       toast.error("Type the correct msg..", {
         position: "top-right",
-        autoClose: 2000,
+        autoClose: 1000,
         theme: "dark",
       });
       return;
@@ -317,7 +317,7 @@ function Reset(){
         });
         toast.success("Reset successful..", {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 1000,
           theme: "dark",
         });
     }
@@ -325,7 +325,7 @@ function Reset(){
       console.log(err);
       toast.error("Error in reset..", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 1000,
         theme: "dark",
       });
     }

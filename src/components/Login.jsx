@@ -18,14 +18,14 @@ export default function Login(){
       case "success":
         toast.success("Logged in!",{
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 1000,
           theme: "dark",
         });
         break;
       case "error":
         toast.error("Error in logging in..",{
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 1000,
           theme: "dark",
         });
         break;
@@ -40,7 +40,7 @@ export default function Login(){
     if(username === ''){
       toast.error("Username can't be empty.", {
         position: "top-right",
-        autoClose: 2000,
+        autoClose: 1000,
         theme: "dark",
       });
       return;
@@ -48,7 +48,7 @@ export default function Login(){
     if(password === ''){
       toast.error("Password can't be empty", {
         position: "top-right",
-        autoClose: 2000,
+        autoClose: 1000,
         theme: "dark",
       });
       return;
