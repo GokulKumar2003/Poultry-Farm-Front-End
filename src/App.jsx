@@ -10,6 +10,7 @@ import StockUpdate from './components/StockUpdate'
 import DownloadReport from './components/DownloadReport'
 import Login from './components/Login';
 import Logout from './components/Logout';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
     return(
@@ -18,10 +19,26 @@ function App() {
                 <Navbar />
                 <Routes>
                     <Route path="/" element={<Login />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/stock-update" element={<StockUpdate />} />
-                    <Route path="/report" element={<DownloadReport />} />
-                    <Route path="/logout" element={<Logout />} />
+                    <Route path="/dashboard" element={
+                        <ProtectedRoute>
+                            <Dashboard />
+                        </ProtectedRoute>
+                        } />
+                    <Route path="/stock-update" element={
+                        <ProtectedRoute>
+                            <StockUpdate />
+                        </ProtectedRoute>
+                        } />
+                    <Route path="/report" element={
+                        <ProtectedRoute>
+                            <DownloadReport />
+                        </ProtectedRoute>
+                        } />
+                    <Route path="/logout" element={
+                        <ProtectedRoute>
+                            <Logout />
+                        </ProtectedRoute>
+                        } />
                 </Routes>
             </div>
         </Router>

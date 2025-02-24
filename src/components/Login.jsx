@@ -59,6 +59,7 @@ export default function Login(){
       {username, password},
       {headers: { "Content-Type": "application/json" }});
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("isLoggedIn", "true");
       navigate("/dashboard");
       showToast("success");
     } catch (error) {

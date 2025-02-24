@@ -6,6 +6,7 @@ import * as XLSX from "xlsx"; // ✅ Correct
 import { Download } from 'lucide-react';
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import AuthListener from './AuthListener';
 
 function DeleteRecord(){
 
@@ -231,6 +232,7 @@ export default function DownloadReport(){
   return (
 
     <>
+    <AuthListener />
     <DeleteRecord />
     <form>
     <table className='tableStyle'>

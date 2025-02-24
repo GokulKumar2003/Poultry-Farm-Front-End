@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import '../styles/style.css'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AuthListener from "./AuthListener";
 
 export default function Dashboard() {
   const [shedData, setShedData] = useState([]);
@@ -69,6 +70,7 @@ export default function Dashboard() {
   if(loading){
     return(
       <>
+        <AuthListener />
         <table className="dashboard">
           <tr className="dashboard-title">
             <td>Loading Stock..</td>
@@ -81,6 +83,7 @@ export default function Dashboard() {
   if(loadingErr){
     return(
       <>
+        <AuthListener />
         <table className="dashboard">
           <tr className="dashboard-title">
             <td>Error in Loading Stock..</td>
@@ -93,6 +96,7 @@ export default function Dashboard() {
   }
   return (
       <>
+        <AuthListener />
         <table className="dashboard">
           <tr>
             <td className="dashboard-title" colSpan={9}>LAYER</td>

@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import '../styles/style.css'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AuthListener from "./AuthListener";
 
 export default function StockUpdate(){
     
@@ -106,6 +107,7 @@ export default function StockUpdate(){
 
     return(
       <>
+        <AuthListener />
         <form>
         <table className="tableStyle">
         <thead>
