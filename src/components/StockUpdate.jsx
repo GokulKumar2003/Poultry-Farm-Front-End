@@ -20,7 +20,7 @@ export default function StockUpdate(){
                                                             deathCnt: '',    
                                                             });
     
-    const [isDisabled, setIsDisabled] = useState(false);
+    const [isHidden, setIsHidden] = useState(false);
                                                       
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -110,10 +110,10 @@ export default function StockUpdate(){
 
     function handleShedChange(e){
       if(e.target.value === "chick1" || e.target.value === "grower1"){
-        setIsDisabled(true);
+        setIsHidden(true);
       }
       else{
-        setIsDisabled(false); 
+        setIsHidden(false); 
       }
 
       const { name, value } = e.target;
@@ -162,15 +162,15 @@ export default function StockUpdate(){
               
             </td>
           </tr>
-          <tr>
+          <tr hidden={isHidden}>
             <td className="subHeaderStyle">Production</td>
             <td className="subHeaderStyle">Sale</td>
           </tr>
-          <tr>
+          <tr hidden={isHidden}>
             <td className="cellStyle">
               <div class="input-container">
                 <label for="largeProduction">Large</label>
-                <input autoComplete="off" disabled={isDisabled} className = {stockUpdateData.largeProduction === "" | isNaN(stockUpdateData.largeProduction) ? "error_input" : "" }
+                <input autoComplete="off" className = {stockUpdateData.largeProduction === "" | isNaN(stockUpdateData.largeProduction) ? "error_input" : "" }
                   type= " text" name="largeProduction" value={stockUpdateData.largeProduction} onChange={handleChange} />
               </div>
             
@@ -178,17 +178,17 @@ export default function StockUpdate(){
             <td className="cellStyle">
               <div class="input-container">
                 <label for="largeSale">Large</label>
-                <input autoComplete="off" disabled={isDisabled} className = {stockUpdateData.largeSale === "" | isNaN(stockUpdateData.largeSale) ? "error_input" : "" } 
+                <input autoComplete="off" className = {stockUpdateData.largeSale === "" | isNaN(stockUpdateData.largeSale) ? "error_input" : "" } 
                   type= " text" name="largeSale" value={stockUpdateData.largeSale} onChange={handleChange} />
               </div>
             
             </td>
           </tr>
-          <tr>
+          <tr hidden={isHidden}>
             <td className="cellStyle">
               <div class="input-container">
                 <label for="smallProduction">Small</label>
-                <input autoComplete="off" disabled={isDisabled} className = {stockUpdateData.smallProduction === "" | isNaN(stockUpdateData.smallProduction) ? "error_input" : "" } 
+                <input autoComplete="off" className = {stockUpdateData.smallProduction === "" | isNaN(stockUpdateData.smallProduction) ? "error_input" : "" } 
                 type= " text" name="smallProduction" value={stockUpdateData.smallProduction} onChange={handleChange} />
               </div> 
             
@@ -196,16 +196,16 @@ export default function StockUpdate(){
             <td className="cellStyle">
               <div class="input-container">
                 <label for="smallSale">Small</label>
-                <input autoComplete="off" disabled={isDisabled} className = {stockUpdateData.smallSale === "" | isNaN(stockUpdateData.smallSale) ? "error_input" : "" }
+                <input autoComplete="off" className = {stockUpdateData.smallSale === "" | isNaN(stockUpdateData.smallSale) ? "error_input" : "" }
                   type= " text" name="smallSale" value={stockUpdateData.smallSale} onChange={handleChange} />
               </div> 
             </td>
           </tr>
-          <tr>
+          <tr hidden={isHidden}>
             <td className="cellStyle">
               <div class="input-container">
                 <label for="brokenProduction">Broken</label>
-                <input autoComplete="off" disabled={isDisabled} className = {stockUpdateData.brokenProduction === "" | isNaN(stockUpdateData.brokenProduction) ? "error_input" : "" }
+                <input autoComplete="off" className = {stockUpdateData.brokenProduction === "" | isNaN(stockUpdateData.brokenProduction) ? "error_input" : "" }
               type= " text" name="brokenProduction" value={stockUpdateData.brokenProduction} onChange={handleChange} />
               </div> 
             
@@ -213,17 +213,17 @@ export default function StockUpdate(){
             <td className="cellStyle">
               <div class="input-container">
                 <label for="brokenSale">Broken</label>
-                <input autoComplete="off" disabled={isDisabled} className = {stockUpdateData.brokenSale === "" | isNaN(stockUpdateData.brokenSale) ? "error_input" : "" }
+                <input autoComplete="off" className = {stockUpdateData.brokenSale === "" | isNaN(stockUpdateData.brokenSale) ? "error_input" : "" }
               type= " text" name="brokenSale" value={stockUpdateData.brokenSale} onChange={handleChange} />
               </div>  
             
             </td>
           </tr>
-          <tr>
+          <tr hidden={isHidden}>
             <td className="cellStyle">
               <div class="input-container">
                 <label for="dirtyProduction">Dirty</label>
-                <input autoComplete="off" disabled={isDisabled} className = {stockUpdateData.dirtyProduction === "" | isNaN(stockUpdateData.dirtyProduction) ? "error_input" : "" }
+                <input autoComplete="off" className = {stockUpdateData.dirtyProduction === "" | isNaN(stockUpdateData.dirtyProduction) ? "error_input" : "" }
               type= " text" name="dirtyProduction" value={stockUpdateData.dirtyProduction} onChange={handleChange} />
               </div> 
             
@@ -231,7 +231,7 @@ export default function StockUpdate(){
             <td className="cellStyle">
               <div class="input-container">
                 <label for="dirtySale">Dirty</label>
-                <input autoComplete="off" disabled={isDisabled} className = {stockUpdateData.dirtySale === "" | isNaN(stockUpdateData.dirtySale) ? "error_input" : "" }
+                <input autoComplete="off" className = {stockUpdateData.dirtySale === "" | isNaN(stockUpdateData.dirtySale) ? "error_input" : "" }
               type= " text" name="dirtySale" value={stockUpdateData.dirtySale} onChange={handleChange} />
               </div> 
             

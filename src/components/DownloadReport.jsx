@@ -108,7 +108,7 @@ export default function DownloadReport(){
   const [shedId, setShedId] = useState(1);
   const [isResponseReady, setIsResponseReady] = useState(false);
   const [report, setReport] = useState({});
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
 
   const token = localStorage.getItem("token");
 
@@ -232,11 +232,11 @@ export default function DownloadReport(){
 
   function handleReportTypeChange(e){
     if(e.target.value === "overall"){
-      setIsDisabled(true);
+      setIsHidden(true);
       setReportType(e.target.value);
     }
     else{
-      setIsDisabled(false); 
+      setIsHidden(false); 
       setReportType(e.target.value);
     }
   }
@@ -286,10 +286,10 @@ export default function DownloadReport(){
               </select>
           </td>
           </tr>
-          <tr>
+          <tr hidden={isHidden}>
             <td className="subHeaderStyle">Shed</td>
             <td className="cellStyle">
-              <select disabled={isDisabled} value={shedId} onChange={(e) => setShedId(e.target.value)}>
+              <select value={shedId} onChange={(e) => setShedId(e.target.value)}>
                 <option value="1">Shed 1</option>
                 <option value="2">Shed 2</option>
                 <option value="3">Shed 3</option>
