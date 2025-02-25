@@ -3,6 +3,7 @@ import '../styles/style.css'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthListener from "./AuthListener";
+import { use } from "react";
 
 export default function StockUpdate(){
     
@@ -17,8 +18,10 @@ export default function StockUpdate(){
                                                             brokenSale: '',
                                                             dirtySale: '',
                                                             deathCnt: '',    
-                                                            })
+                                                            });
     
+    const [isDisabled, setIsDisabled] = useState(false);
+                                                      
     const handleChange = (e) => {
         const { name, value } = e.target;
 
@@ -105,6 +108,29 @@ export default function StockUpdate(){
       
     }
 
+    function handleShedChange(e){
+      if(e.target.value === "chick1" || e.target.value === "grower1"){
+        setIsDisabled(true);
+      }
+      else{
+        setIsDisabled(false); 
+      }
+
+      const { name, value } = e.target;
+
+        setStockUpdateData((prevData) => ({
+            ...prevData, // Keep existing data
+            shedId: value,
+            largeProduction: '',
+            largeSale:'',
+            smallProduction:'',
+            smallSale:'',
+            brokenProduction:'',
+            brokenSale:'',
+            dirtyProduction:'',
+            dirtySale:''
+        }));
+    }
     return(
       <>
         <AuthListener />
@@ -119,7 +145,7 @@ export default function StockUpdate(){
         <tbody>
           <tr>
             <td className="subHeaderStyle"> 
-              <select  name="shedId" value={stockUpdateData.shedId} onChange={handleChange}>
+              <select  name="shedId" value={stockUpdateData.shedId} onChange={handleShedChange}>
                 <option value="0">Select Shed</option>
                 <option value="layer1">Shed 1</option>
                 <option value="layer2">Shed 2</option>
@@ -144,7 +170,7 @@ export default function StockUpdate(){
             <td className="cellStyle">
               <div class="input-container">
                 <label for="largeProduction">Large</label>
-                <input className = {stockUpdateData.largeProduction === "" | isNaN(stockUpdateData.largeProduction) ? "error_input" : "" }
+                <input autoComplete="off" disabled={isDisabled} className = {stockUpdateData.largeProduction === "" | isNaN(stockUpdateData.largeProduction) ? "error_input" : "" }
                   type= " text" name="largeProduction" value={stockUpdateData.largeProduction} onChange={handleChange} />
               </div>
             
@@ -152,7 +178,7 @@ export default function StockUpdate(){
             <td className="cellStyle">
               <div class="input-container">
                 <label for="largeSale">Large</label>
-                <input className = {stockUpdateData.largeSale === "" | isNaN(stockUpdateData.largeSale) ? "error_input" : "" } 
+                <input autoComplete="off" disabled={isDisabled} className = {stockUpdateData.largeSale === "" | isNaN(stockUpdateData.largeSale) ? "error_input" : "" } 
                   type= " text" name="largeSale" value={stockUpdateData.largeSale} onChange={handleChange} />
               </div>
             
@@ -162,7 +188,7 @@ export default function StockUpdate(){
             <td className="cellStyle">
               <div class="input-container">
                 <label for="smallProduction">Small</label>
-                <input className = {stockUpdateData.smallProduction === "" | isNaN(stockUpdateData.smallProduction) ? "error_input" : "" } 
+                <input autoComplete="off" disabled={isDisabled} className = {stockUpdateData.smallProduction === "" | isNaN(stockUpdateData.smallProduction) ? "error_input" : "" } 
                 type= " text" name="smallProduction" value={stockUpdateData.smallProduction} onChange={handleChange} />
               </div> 
             
@@ -170,7 +196,7 @@ export default function StockUpdate(){
             <td className="cellStyle">
               <div class="input-container">
                 <label for="smallSale">Small</label>
-                <input className = {stockUpdateData.smallSale === "" | isNaN(stockUpdateData.smallSale) ? "error_input" : "" }
+                <input autoComplete="off" disabled={isDisabled} className = {stockUpdateData.smallSale === "" | isNaN(stockUpdateData.smallSale) ? "error_input" : "" }
                   type= " text" name="smallSale" value={stockUpdateData.smallSale} onChange={handleChange} />
               </div> 
             </td>
@@ -179,7 +205,7 @@ export default function StockUpdate(){
             <td className="cellStyle">
               <div class="input-container">
                 <label for="brokenProduction">Broken</label>
-                <input className = {stockUpdateData.brokenProduction === "" | isNaN(stockUpdateData.brokenProduction) ? "error_input" : "" }
+                <input autoComplete="off" disabled={isDisabled} className = {stockUpdateData.brokenProduction === "" | isNaN(stockUpdateData.brokenProduction) ? "error_input" : "" }
               type= " text" name="brokenProduction" value={stockUpdateData.brokenProduction} onChange={handleChange} />
               </div> 
             
@@ -187,7 +213,7 @@ export default function StockUpdate(){
             <td className="cellStyle">
               <div class="input-container">
                 <label for="brokenSale">Broken</label>
-                <input className = {stockUpdateData.brokenSale === "" | isNaN(stockUpdateData.brokenSale) ? "error_input" : "" }
+                <input autoComplete="off" disabled={isDisabled} className = {stockUpdateData.brokenSale === "" | isNaN(stockUpdateData.brokenSale) ? "error_input" : "" }
               type= " text" name="brokenSale" value={stockUpdateData.brokenSale} onChange={handleChange} />
               </div>  
             
@@ -197,7 +223,7 @@ export default function StockUpdate(){
             <td className="cellStyle">
               <div class="input-container">
                 <label for="dirtyProduction">Dirty</label>
-                <input className = {stockUpdateData.dirtyProduction === "" | isNaN(stockUpdateData.dirtyProduction) ? "error_input" : "" }
+                <input autoComplete="off" disabled={isDisabled} className = {stockUpdateData.dirtyProduction === "" | isNaN(stockUpdateData.dirtyProduction) ? "error_input" : "" }
               type= " text" name="dirtyProduction" value={stockUpdateData.dirtyProduction} onChange={handleChange} />
               </div> 
             
@@ -205,7 +231,7 @@ export default function StockUpdate(){
             <td className="cellStyle">
               <div class="input-container">
                 <label for="dirtySale">Dirty</label>
-                <input className = {stockUpdateData.dirtySale === "" | isNaN(stockUpdateData.dirtySale) ? "error_input" : "" }
+                <input autoComplete="off" disabled={isDisabled} className = {stockUpdateData.dirtySale === "" | isNaN(stockUpdateData.dirtySale) ? "error_input" : "" }
               type= " text" name="dirtySale" value={stockUpdateData.dirtySale} onChange={handleChange} />
               </div> 
             
@@ -215,7 +241,7 @@ export default function StockUpdate(){
             <td className="cellStyle" colSpan={2}>
               <div class="input-container">
                 <label for="deathCnt">Death Cnt</label>
-                <input className = {stockUpdateData.deathCnt === "" | isNaN(stockUpdateData.deathCnt) ? "error_input" : "" }
+                <input autoComplete="off" className = {stockUpdateData.deathCnt === "" | isNaN(stockUpdateData.deathCnt) ? "error_input" : "" }
               type= " text" name="deathCnt" value={stockUpdateData.deathCnt} onChange={handleChange} />
             
               </div> 

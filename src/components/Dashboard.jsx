@@ -358,7 +358,7 @@ function Reset(){
           <td className="cellStyle">
             <div class="input-container">
               <label for="birds">Birds Cnt</label>
-              <input type = "text" name="birds" value={birdsCnt} onChange={(e)=>{setBirdsCnt(e.target.value)}} />
+              <input autoComplete="off" type = "text" name="birds" value={birdsCnt} onChange={(e)=>{setBirdsCnt(e.target.value)}} />
             </div>
             
           </td>
