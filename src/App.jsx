@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import { useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Dashboard from './components/Dashboard'
 
 import StockUpdate from './components/StockUpdate'
@@ -62,10 +62,10 @@ function Navbar(){
                 <div className='navbar-container'>
                     <div className="navbar-logo">Anbhazhagan Poultry Farm</div>
                     <ul className={`navbar-links ${isMobileMenuOpen ? "active" : ""}`}>
-                        <li><Link to="/dashboard">Dashboard</Link></li>
-                        <li><Link to="/stock-update">Update Stock</Link></li>
-                        <li><Link to="/report">Report</Link></li>
-                        <li><Link to="/logout">Logout</Link></li>
+                        <li><NavLink className={({ isActive }) => isActive ? "current" : ""} to="/dashboard">Dashboard</NavLink></li>
+                        <li><NavLink className={({ isActive }) => isActive ? "current" : ""} to="/stock-update">Update Stock</NavLink></li>
+                        <li><NavLink className={({ isActive }) => isActive ? "current" : ""} to="/report">Report</NavLink></li>
+                        <li><NavLink className={({ isActive }) => isActive ? "current" : ""} to="/logout">Logout</NavLink></li>
                     </ul>
                     <button className="menu-toggle" onClick={toggleMobileMenu}>
                         <span className="menu-bar"></span>
