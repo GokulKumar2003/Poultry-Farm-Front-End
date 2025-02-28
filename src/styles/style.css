@@ -233,8 +233,7 @@ button:hover {
 
 /* Navbar Styles */
 .navbar {
-  background-color: #1E3A8A;
-  color: white;
+  background-color: #f9f9f9;
   padding: .2rem 2rem;
 }
 
@@ -247,6 +246,7 @@ button:hover {
 .navbar-logo {
   font-size: 1.5rem;
   font-weight: bold;
+  color: #34A853;
 }
 
 .navbar-links {
@@ -259,20 +259,21 @@ button:hover {
 }
 
 .navbar-links a {
-  color: white;
+  color: #EA4335;
   font-size: 1.25rem;
   transition: color 0.2s, transform 0.2s ease-in-out;
   text-decoration: none;
   display: inline-block;
+  font-weight: bold;
 }
 
 .navbar-links a:hover {
-  color: #ffd700;
+  color: #FBBC05;
   transform: translateY(-3px);
 }
 
 .navbar-links a.current {
-  color: #22f706;
+  color: #4285F4;
   transform: none;
   font-weight: bold;
 }
