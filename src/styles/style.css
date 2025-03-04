@@ -32,6 +32,17 @@ label {
   color: #1E3A8A;
 }
 
+.show_pwd_label {
+  cursor: pointer;
+  position: absolute;
+  top: -5px;  /* Moves label up */
+  right: 5px;  /* Moves label slightly inside */
+  background: white;
+  padding: 0 5px;
+  font-size: 13px;
+  color: #374151;
+}
+
 input,
 .error_input,
 select {

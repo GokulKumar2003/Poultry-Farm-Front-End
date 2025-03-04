@@ -3,11 +3,13 @@ import '../styles/style.css'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
 import axios from "axios";
 
 export default function Login(){
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isPasswordHidden, setIsPasswordHidden] = useState(true)
   const navigate = useNavigate();
 
   const showToast = (type) => {
@@ -102,12 +104,15 @@ export default function Login(){
               <div class="input-container">
                 <label for="password">Password</label>
                 <input
-                type="password"
+                type={isPasswordHidden ? "password" : "text"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 />
+                <p className='show_pwd_label'
+                   onClick={()=>{setIsPasswordHidden(!isPasswordHidden)}}>
+                    {isPasswordHidden ? <Eye size={20}/> : <EyeOff size={20}/> }
+                </p>
               </div> 
-              
             </td>
           </tr>
           <tr>
