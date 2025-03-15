@@ -8,6 +8,10 @@ body {
   line-height: 1.5; /* Better readability */
 }
 
+* {
+  box-sizing: border-box; /* Apply to all elements for consistent sizing */
+}
+
 .input-container {
   position: relative;
   display: inline-block;
@@ -90,6 +94,17 @@ button:hover {
   border: 2px solid #e2e8f0; 
 }
 
+.report-tableStyle {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 600px; /* Adjust table size */
+  margin: 2em auto;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  color: #374151;
+  border: 2px solid #e2e8f0; 
+}
+
 .loginFormStyle {
   border-collapse: collapse;
   width: 100%;
@@ -121,6 +136,7 @@ button:hover {
   color: #374151;
 }
 
+.report-tableStyle td,
 .tableStyle td,
 .dashboard td {
   padding: 0.75em;
@@ -208,126 +224,345 @@ button:hover {
   background-color: #e2e8f0; /* Slightly darker background for odd rows */
 }
 
-/* Responsive Design */
+/* Navbar Styles */
+.navbar {
+  background-color: #f8f9fa;
+  padding: 0.8rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  box-shadow: 0 2px 5px rgba(0, 0, 255, 0.2);
+}
+
+/* Logo on the right */
+.navbar-logo {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #34A853;
+  margin-left: auto;
+}
+
+/* Sidebar Navigation (Hidden by default) */
+.navbar-links {
+  position: fixed;
+  top: 0;
+  left: -280px; /* Initially hidden */
+  width: 280px;
+  height: 100%;
+  background-color: #f8f9fa;
+  padding-top: 60px;
+  transition: left 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 10px rgba(0, 0,0, 0.3);
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+/* When active, slide in */
+.navbar-links.active {
+  left: 0;
+}
+
+/* Menu Items */
+.navbar-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar-links li {
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: background 0.3s ease-in-out;
+}
+
+.navbar-links li:hover {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+/* Submenu */
+.submenu {
+  display: none;
+  flex-direction: column;
+  padding-left: 15px;
+}
+
+.submenu li {
+  font-size: 1rem;
+  padding: 8px 20px;
+  border-bottom: none;
+}
+
+/* Show submenu when active */
+.submenu.active {
+  display: flex;
+}
+
+.submenu-options {
+  margin-left: 30px;
+  color: #34A853;
+  text-decoration: none;
+}
+
+.submenu-options:hover{
+  margin-left: 30px;
+  color: black;
+  text-decoration: none;
+}
+
+.menu-title {
+  color: #4285F4;
+  text-decoration: none;
+}
+
+/* Close Button */
+.close-menu {
+  color: black;
+  background-color: #f8f9fa;
+  border: none;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  font-size: large;
+}
+
+.close-menu:hover {
+  background-color: #f8f9fa;
+  color: red;
+}
+
+/* Toggle Button */
+.menu-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 30px;
+  height: 24px;
+  background: transparent;
+  cursor: pointer;
+  z-index: 2500;
+}
+
+.menu-bar {
+  width: 75%;
+  height: 3px;
+  background-color: #4285F4;
+  margin: 1px 1px;
+}
+
+.menu-toggle.active .menu-bar {
+  background-color: #EA4335;
+}
+
+/* Overlay for when menu is open */
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 500; /* Below navbar but above content */
+}
+
+.overlay.active {
+  display: block;
+}
+
+/* Enhanced Responsive Design - With separate tables maintained */
+@media (max-width: 1200px) {
+  .dashboard {
+    max-width: 95%;
+  }
+  
+  .chick-dashboard {
+    max-width: 95%;
+  }
+}
+
 @media (max-width: 1024px) {
-  .tableStyle, .dashboard {
-      font-size: 0.9rem;
+  .tableStyle {
+    max-width: 90%;
+    font-size: 0.9rem;
+  }
+  
+  .loginFormStyle {
+    max-width: 90%;
+    font-size: 0.9rem;
+  }
+  
+  .dashboard {
+    font-size: 0.9rem;
+  }
+  
+  .chick-dashboard {
+    font-size: 0.9rem;
   }
 
   .headerStyle, .dashboard-title {
-      font-size: 1.25rem;
+    font-size: 1.25rem;
   }
 }
 
 @media (max-width: 768px) {
   input, select, button {
-      width: 100%; /* Full width for smaller screens */
+    width: 100%; /* Full width for smaller screens */
+    max-width: none;
+  }
+  
+  button {
+    margin-bottom: 1em;
   }
 
-  .tableStyle, .dashboard {
-      font-size: 0.85rem;
-      overflow-x: auto; /* Allow horizontal scroll */
+  .tableStyle {
+    font-size: 0.85rem;
+    overflow-x: auto; /* Allow horizontal scroll */
+    display: block; /* For horizontal scrolling to work */
   }
+  
+  /* .loginFormStyle {
+    font-size: 0.85rem;
+    overflow-x: auto;
+    display: block;
+  } */
+  
+  .dashboard {
+    font-size: 0.85rem;
+    overflow-x: auto;
+    display: block;
+  }
+  
+  /* .chick-dashboard {
+    font-size: 0.85rem;
+    overflow-x: auto;
+    display: block;
+  } */
 
   .headerStyle, .dashboard-title {
-      font-size: 1rem;
+    font-size: 1rem;
   }
 
   .subHeaderStyle {
-      font-size: 0.9rem;
+    font-size: 0.9rem;
   }
 
   .navbar-links {
-      font-size: 0.9rem; /* Reduce navbar link size */
+    width: 250px; /* Slightly smaller for mobile */
+    max-width: 80%; /* Prevent it from being too wide */
   }
-}
-
-/* Navbar Styles */
-.navbar {
-  background-color: #f9f9f9;
-  padding: .2rem 2rem;
-}
-
-.navbar-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.navbar-logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #34A853;
-}
-
-.navbar-links {
-  display: flex;
-  list-style: none;
-}
-
-.navbar-links li {
-  margin: 0 1rem;
-}
-
-.navbar-links a {
-  color: #EA4335;
-  font-size: 1.25rem;
-  transition: color 0.2s, transform 0.2s ease-in-out;
-  text-decoration: none;
-  display: inline-block;
-  font-weight: bold;
-}
-
-.navbar-links a:hover {
-  color: #FBBC05;
-  transform: translateY(-3px);
-}
-
-.navbar-links a.current {
-  color: #4285F4;
-  transform: none;
-  font-weight: bold;
-}
-
-.menu-toggle {
-  display: none;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 30px;
-  height: 25px;
-  border: none;
-  cursor: pointer;
-}
-
-.menu-bar {
-  width: 100%;
-  height: 3px;
-  background-color: white;
-}
-
-/* Mobile Navbar */
-@media (max-width: 768px) {
+  
   .menu-toggle {
-      display: flex;
+    position: absolute;
+    top: 15px;
+    left: 15px;
   }
-
-  .navbar-links {
-      display: none;
-      flex-direction: column;
-      position: absolute;
-      /* top: 60px; */
-      right: 0;
-      width: 100%;
-      background-color: #1E3A8A;
-      padding: 1rem 0;
+  
+  .navbar-logo {
+    font-size: 1.4rem; /* Slightly smaller on mobile */
   }
+}
 
-  .navbar-links.active {
-      display: flex;
+@media (max-width: 576px) {
+  .navbar {
+    padding: 0.8rem 1rem;
   }
-
+  
+  .tableStyle,
+  .report-tableStyle,
+  .loginFormStyle,
+  .dashboard,
+  .chick-dashboard {
+    margin: 1em auto;
+    font-size: 0.8rem;
+  }
+  
+  .headerStyle, 
+  .dashboard-title,
+  .chick-dashboard-title {
+    padding: 0.8em;
+    font-size: 0.95rem;
+  }
+  
+  .dashboard-subheader,
+  .chick-dashboard-subheader,
+  .report-title {
+    padding: 0.8em;
+    font-size: 0.9rem;
+  }
+  
+  .cellStyle, 
+  .dashboard-cell {
+    padding: 0.6em;
+  }
+  
   .navbar-links li {
-      margin: 0.5rem 0;
-      text-align: center;
+    padding: 10px 15px;
+    font-size: 1.1rem;
   }
+  
+  .submenu li {
+    padding: 6px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .navbar-logo {
+    font-size: 1.3rem;
+  }
+  
+  .tableStyle,
+  .report-tableStyle,
+  .loginFormStyle,
+  .dashboard,
+  .chick-dashboard {
+    font-size: 0.75rem;
+  }
+  
+  .cellStyle, 
+  .dashboard-cell {
+    padding: 0.5em;
+  }
+  
+  .headerStyle, 
+  .dashboard-title,
+  .chick-dashboard-title {
+    padding: 0.7em;
+    font-size: 0.9rem;
+  }
+}
+
+/* Fix scrolling issue on small screens */
+@media (max-width: 768px) {
+  .navbar-links {
+    height: 100vh; /* Ensure full height */
+    overflow-y: auto; /* Allow scrolling */
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #ffffff #1E3A8A; /* Custom scrollbar */
+  }
+
+  /* Custom scrollbar for Chrome, Edge, and Safari */
+  .navbar-links::-webkit-scrollbar {
+    width: 8px;
+  }
+  .navbar-links::-webkit-scrollbar-thumb {
+    background: #ffffff; /* White scrollbar */
+    border-radius: 10px;
+  }
+  .navbar-links::-webkit-scrollbar-track {
+    background: #1E3A8A;
+  }
+}
+
+/* JavaScript to close navbar when a link is clicked can be added in HTML, but here's a related CSS class */
+.navbar-links.closing {
+  left: -280px; /* This class can be added with JS when a link is clicked */
+  transition: left 0.3s ease-in-out;
 }

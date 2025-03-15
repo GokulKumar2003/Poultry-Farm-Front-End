@@ -110,7 +110,7 @@ export default function Login(){
                 />
                 <p className='show_pwd_label'
                    onClick={()=>{setIsPasswordHidden(!isPasswordHidden)}}>
-                    {isPasswordHidden ? <Eye size={20}/> : <EyeOff size={20}/> }
+                    {isPasswordHidden ? <Eye strokeWidth={1} size={20}/> : <EyeOff strokeWidth={1} size={20}/> }
                 </p>
               </div> 
             </td>

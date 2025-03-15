@@ -357,14 +357,14 @@ function Reset(){
           </td>
           <td className="cellStyle">
             <div class="input-container">
-              <label for="birds">Birds Cnt</label>
+              <label for="birds">Birds</label>
               <input autoComplete="off" type = "text" name="birds" value={birdsCnt} onChange={(e)=>{setBirdsCnt(e.target.value)}} />
             </div>
             
           </td>
           <td className="cellStyle">
             <div class="input-container">
-              <label for="batch-start-date">Batch Start Date</label>
+              <label for="batch-start-date">Date</label>
               <input type = "date" name="batch-start-date" value={batchStartDate} onChange={(e)=>{setBatchStartDate(e.target.value)}} />
             </div> 
           </td>
@@ -375,7 +375,7 @@ function Reset(){
           </td>
           <td className="cellStyle">
             <div class="input-container">
-              <label for="confirmMsg">Confirmation Msg</label>
+              <label for="confirmMsg">Msg</label>
               <input autocomplete="off" type = "text" name="confirmMsg" value={confirmMsg} onChange={(e)=>{setConfirmMsg(e.target.value)}} />
             </div>   
           </td>

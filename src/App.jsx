@@ -12,6 +12,8 @@ import Login from './components/Login';
 import Logout from './components/Logout';
 import ProtectedRoute from './components/ProtectedRoute';
 
+import { ArrowLeftFromLine, ChevronDown, ChevronUp } from 'lucide-react';
+
 function App() {
     return(
       <Router>
@@ -45,40 +47,104 @@ function App() {
     )
 };
 
-function Navbar(){
-
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+function Navbar() {
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [activeSubmenu, setActiveSubmenu] = useState(null);
     const location = useLocation();
-    const toggleMobileMenu = () => {
-      setIsMobileMenuOpen(!isMobileMenuOpen);
+
+    useEffect(() => {
+        if (location.pathname === "/") {
+            setMenuOpen(false);
+            setActiveSubmenu(null);
+        }
+    }, [location.pathname]);
+
+    // Toggle sidebar
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    };
+
+    // Toggle submenus
+    const toggleSubmenu = (id) => {
+        setActiveSubmenu(activeSubmenu === id ? null : id);
+    };
+
+    // Close menu when clicking the close button
+    const closeMenu = () => {
+        setMenuOpen(false);
+        setActiveSubmenu(null);
     };
 
     const isLoginPage = location.pathname === "/";
-    return(<>
-        {
-            !isLoginPage && (
+
+    return (
+        <>
+            {!isLoginPage && (
                 <>
-                <nav className="navbar">
-                <div className='navbar-container'>
-                    <div className="navbar-logo">Anbhazhagan Poultry Farm</div>
-                    <ul className={`navbar-links ${isMobileMenuOpen ? "active" : ""}`}>
-                        <li><NavLink className={({ isActive }) => isActive ? "current" : ""} to="/dashboard">Dashboard</NavLink></li>
-                        <li><NavLink className={({ isActive }) => isActive ? "current" : ""} to="/stock-update">Update Stock</NavLink></li>
-                        <li><NavLink className={({ isActive }) => isActive ? "current" : ""} to="/report">Report</NavLink></li>
-                        <li><NavLink className={({ isActive }) => isActive ? "current" : ""} to="/logout">Logout</NavLink></li>
-                    </ul>
-                    <button className="menu-toggle" onClick={toggleMobileMenu}>
-                        <span className="menu-bar"></span>
-                        <span className="menu-bar"></span>
-                        <span className="menu-bar"></span>
-                    </button>
+                    {/* Navbar */}
+                    <div className="navbar">
+                        {/* Menu Toggle Button */}
+                        <div className={`menu-toggle ${menuOpen ? "active" : ""}`} onClick={toggleMenu}>
+                            <div className="menu-bar"></div>
+                            <div className="menu-bar"></div>
+                            <div className="menu-bar"></div>
+                        </div>
+
+                        {/* Logo on the Right */}
+                        <div className="navbar-logo">Anbhazhagan Poultry Farm</div>
                     </div>
-                    </nav>
+
+                    {/* Sidebar Navigation */}
+                    <div className={`navbar-links ${menuOpen ? "active" : ""}`}>
+                        <ul>
+                            <li>
+                                <NavLink className='menu-title' to="/dashboard">
+                                    Dashboard
+                                </NavLink>
+                            </li>
+
+                            {/* Eggs Submenu */}
+                            <li onClick={() => toggleSubmenu('submenu1')} className="menu-title has-submenu">
+                                Eggs {activeSubmenu === 'submenu1' ? <ChevronUp size={15}/> : <ChevronDown size={15}/>}
+                            
+                            <ul id="submenu1" className={`submenu ${activeSubmenu === 'submenu1' ? "active" : ""}`}>
+                                <li >
+                                    <NavLink className='submenu-options' to="/stock-update">
+                                        Egg Stock Update
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink className='submenu-options' to="/report">
+                                        Report
+                                    </NavLink>
+                                </li>
+                            </ul>
+                            </li>
+
+                            {/* Feed Submenu */}
+                            <li onClick={() => toggleSubmenu('submenu2')} className="menu-title has-submenu">
+                                Feed {activeSubmenu === 'submenu2' ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
+                            
+                                <ul id="submenu2" className={`submenu ${activeSubmenu === 'submenu2' ? "active" : ""}`}>
+                                    <li className='submenu-options'>Feed Dashboard</li>
+                                    <li className='submenu-options'>Feed Stock Update</li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <NavLink className='menu-title' to="/logout">
+                                    Logout
+                                </NavLink>
+                            </li>
+                        </ul>
+
+                        {/* Close Menu Button */}
+                        <button className="close-menu" onClick={closeMenu}><ArrowLeftFromLine size={20} /> Close</button>
+                    </div>
                 </>
-            )
-        }
-        </> 
-    )
+            )}
+        </>
+    );
 }
 
 export default App

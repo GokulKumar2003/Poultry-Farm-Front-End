@@ -62,7 +62,7 @@ function DeleteRecord(){
   }
   return(
     <>
-      <table className="tableStyle">
+      <table className="report-tableStyle">
         <tr >
           <td className="subHeaderStyle" colSpan={2}>
               Record Delete
@@ -246,7 +246,7 @@ export default function DownloadReport(){
     <AuthListener />
     <DeleteRecord />
     <form>
-    <table className='tableStyle'>
+    <table className='report-tableStyle'>
         <thead>
           <tr>
             <th className="headerStyle" colSpan={2}>Reports</th>
@@ -397,7 +397,7 @@ function ReportTable({report}){
   if(Object.keys(report).length == 0){
     return(
       <>
-        <table className='tableStyle'>
+        <table className='report-tableStyle'>
           <tr>
             <th className="subHeaderStyle">No record Found</th>
           </tr>
