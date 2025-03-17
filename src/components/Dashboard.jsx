@@ -319,9 +319,9 @@ function Reset(){
         },
         body: JSON.stringify({shedId, birdsCnt, batchStartDate}),
         });
-        toast.success("Reset successful..", {
+        toast.success("Reset successful. Stock updation for the previous batch is now not possible from now.", {
           position: "top-right",
-          autoClose: 1000,
+          autoClose: 3000,
           theme: "dark",
         });
     }
@@ -338,8 +338,13 @@ function Reset(){
     <>
       <table className="tableStyle">
         <tr >
-          <td className="subHeaderStyle" colSpan={3}>
+          <td style={{color: 'red'}} className="subHeaderStyle" colSpan={3}>
               Stock Reset
+          </td>
+        </tr>
+        <tr>
+          <td className="cellStyle" colSpan={3}>
+            <p><span style={{color: 'red'}}>|</span> Stock of the current batch will be reset and can't be updated further <span style={{color: 'red'}}>|</span></p>
           </td>
         </tr>
         <tr>

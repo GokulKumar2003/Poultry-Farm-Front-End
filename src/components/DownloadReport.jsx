@@ -45,9 +45,9 @@ function DeleteRecord(){
         },
         body: JSON.stringify({shedId}),
         });
-        toast.success("Records deleted..", {
+        toast.success("Records deleted.. Make sure to reset the respective shed stock..", {
           position: "top-right",
-          autoClose: 1000,
+          autoClose: 3000,
           theme: "dark",
         });
     }
@@ -64,13 +64,14 @@ function DeleteRecord(){
     <>
       <table className="report-tableStyle">
         <tr >
-          <td className="subHeaderStyle" colSpan={2}>
+          <td style={{color: 'red'}} className="subHeaderStyle" colSpan={2}>
               Record Delete
           </td>
         </tr>
         <tr>
           <td className="cellStyle" colSpan={2}>
-            <p style={{color: 'red'}}>Note: This will delete all sales and production history permanently.</p>
+            <p><span style={{color: 'red'}}>|</span> This will delete all sales and production history permanently <span style={{color: 'red'}}>|</span></p>
+            <p><span style={{color: 'red'}}>|</span> Make sure to reset the stock <span style={{color: 'red'}}>|</span></p>
             <p>Confirmation Msg: <b>{""+shed+"-delete"}</b></p>
           </td>
         </tr>

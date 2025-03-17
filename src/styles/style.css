@@ -33,7 +33,7 @@ label {
   background: white;
   padding: 0 5px;
   font-size: 14px;
-  color: #1E3A8A;
+  color: #5F6368;
 }
 
 .show_pwd_label {
@@ -62,18 +62,18 @@ select {
 
 button {
   width: auto; /* Flexible width */
-  background-color: #374151;
+  background-color: #69A1F6;
   color: white;
   font-size: 1rem;
   padding: 0.5em 1em;
-  border: 2px solid #374151;
+  border: 2px solid #69A1F6;
   cursor: pointer;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 button:hover {
   background-color: white;
-  color: #374151;
+  color: #69A1F6;
 }
 
 .dateInput {
@@ -145,7 +145,7 @@ button:hover {
 .headerStyle {
   padding: 1em;
   text-align: center;
-  background-color: #374151;
+  background-color: #69A1F6;
   color: #fff;
   font-weight: bold;
   font-size: 1.25rem;
@@ -154,7 +154,7 @@ button:hover {
 .dashboard-title {
   padding: 1em;
   text-align: center;
-  background-color: #374151;
+  background-color: #69A1F6;
   color: #fff;
   font-weight: bold;
   font-size: 1rem;
@@ -163,7 +163,7 @@ button:hover {
 .dashboard-subheader {
   padding: 1em;
   text-align: center;
-  color: #374151;
+  color: #4285F4;
   font-weight: bold;
   font-size: 1rem;
 }
@@ -171,7 +171,7 @@ button:hover {
 .chick-dashboard-title {
   padding: 1em;
   text-align: center;
-  background-color: #374151;
+  background-color: #69A1F6;
   color: #fff;
   font-weight: bold;
   font-size: 1rem;
@@ -180,7 +180,7 @@ button:hover {
 .chick-dashboard-subheader {
   padding: 1em;
   text-align: center;
-  color: #374151;
+  color: #69A1F6;
   font-weight: bold;
   font-size: 1rem;
 }
@@ -188,7 +188,7 @@ button:hover {
 .report-title {
   padding: 1em;
   text-align: center;
-  color: #374151;
+  color: #69A1F6;
   font-weight: bold;
   font-size: 1rem;
 }
@@ -217,11 +217,11 @@ button:hover {
 }
 
 .even-row {
-  background-color: #f1f5f9; /* Light background for even rows */
+  background-color: #FFFFFF; /* Light background for even rows */
 }
 
 .odd-row {
-  background-color: #e2e8f0; /* Slightly darker background for odd rows */
+  background-color: #E3F2FD; /* Slightly darker background for odd rows */
 }
 
 /* Navbar Styles */
