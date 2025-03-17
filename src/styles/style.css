@@ -421,12 +421,12 @@ button:hover {
     margin-bottom: 1em;
   }
 
-  .tableStyle {
+  /* .tableStyle {
     font-size: 0.85rem;
-    overflow-x: auto; /* Allow horizontal scroll */
-    display: block; /* For horizontal scrolling to work */
-  }
-  
+    overflow-x: auto;
+    display: block;
+  } */
+
   /* .loginFormStyle {
     font-size: 0.85rem;
     overflow-x: auto;
