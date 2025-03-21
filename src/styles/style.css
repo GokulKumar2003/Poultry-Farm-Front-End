@@ -575,11 +575,10 @@ button:hover {
 
 @media (max-width: 600px) {
   .Toastify__toast {
-    width: 12rem !important;  
+    width: 14rem !important;  
     font-size: 0.9rem !important;
     padding: 0.5rem !important;
-    min-height: 2rem !important; 
-    margin: 3rem 0 0 0
+    min-height: 2.5rem !important;
   }
 
   .Toastify__toast-body {

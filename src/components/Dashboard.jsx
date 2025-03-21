@@ -71,8 +71,8 @@ export default function Dashboard() {
     return(
       <>
         <AuthListener />
-        <table className="dashboard">
-          <tr className="dashboard-title">
+        <table className="tableStyle">
+          <tr className="headerStyle">
             <td>Loading Stock..</td>
           </tr>
           </table>
@@ -84,8 +84,8 @@ export default function Dashboard() {
     return(
       <>
         <AuthListener />
-        <table className="dashboard">
-          <tr className="dashboard-title">
+        <table className="tableStyle">
+          <tr className="headerStyle">
             <td>Error in Loading Stock..</td>
           </tr>
           </table>
