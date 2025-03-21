@@ -264,7 +264,7 @@ function Reset(){
   const [birdsCnt, setBirdsCnt] = useState('');
   const [shedName, setShedName] = useState('');
   const [confirmMsg, setConfirmMsg] = useState("");
-  const [batchStartDate, setBatchStartDate] = useState("");
+  const [batchStartDate, setBatchStartDate] = useState('');
   const token = localStorage.getItem("token");
   
   async function handleReset(){
@@ -349,8 +349,7 @@ function Reset(){
         </tr>
         <tr>
           <td className="cellStyle">
-          <div class="input-container">
-          <label for="birds">Shed</label>
+         
               <select  name="shedName" value={shedName} onChange={(e)=>{setShedName(e.target.value)}}>
                 <option value="0">Select Shed</option>
                 <option value="layer1">Shed 1</option>
@@ -361,15 +360,14 @@ function Reset(){
                 <option value="chick1">Chick 1</option>
                 <option value="grower1">Grower 1</option>
               </select>
-            </div>
+           
           </td>
 
          
           <td className="cellStyle">
-            <div class="input-container">
-              <label for="batch-start-date">Date</label>
+            
               <input type = "date" name="batch-start-date" value={batchStartDate} onChange={(e)=>{setBatchStartDate(e.target.value)}} />
-            </div> 
+            
           </td>
         </tr>
 
