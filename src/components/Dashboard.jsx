@@ -338,17 +338,19 @@ function Reset(){
     <>
       <table className="tableStyle">
         <tr >
-          <td style={{color: 'red'}} className="subHeaderStyle" colSpan={3}>
+          <td style={{color: 'red'}} className="subHeaderStyle" colSpan={2}>
               Stock Reset
           </td>
         </tr>
         <tr>
-          <td className="cellStyle" colSpan={3}>
+          <td className="cellStyle" colSpan={2}>
             <p><span style={{color: 'red'}}>|</span> Stock of the current batch will be reset and can't be updated further <span style={{color: 'red'}}>|</span></p>
           </td>
         </tr>
         <tr>
           <td className="cellStyle">
+          <div class="input-container">
+          <label for="birds">Shed</label>
               <select  name="shedName" value={shedName} onChange={(e)=>{setShedName(e.target.value)}}>
                 <option value="0">Select Shed</option>
                 <option value="layer1">Shed 1</option>
@@ -359,14 +361,10 @@ function Reset(){
                 <option value="chick1">Chick 1</option>
                 <option value="grower1">Grower 1</option>
               </select>
-          </td>
-          <td className="cellStyle">
-            <div class="input-container">
-              <label for="birds">Birds</label>
-              <input autoComplete="off" type = "text" name="birds" value={birdsCnt} onChange={(e)=>{setBirdsCnt(e.target.value)}} />
             </div>
-            
           </td>
+
+         
           <td className="cellStyle">
             <div class="input-container">
               <label for="batch-start-date">Date</label>
@@ -374,9 +372,13 @@ function Reset(){
             </div> 
           </td>
         </tr>
+
         <tr>
-          <td className="cellStyle">
-            <span><b>{shedName}-{birdsCnt}</b></span>
+          <td className="cellStyle" >
+            <div class="input-container">
+              <label for="birds">Birds</label>
+              <input autoComplete="off" type = "text" name="birds" value={birdsCnt} onChange={(e)=>{setBirdsCnt(e.target.value)}} />
+            </div>
           </td>
           <td className="cellStyle">
             <div class="input-container">
@@ -384,7 +386,17 @@ function Reset(){
               <input autocomplete="off" type = "text" name="confirmMsg" value={confirmMsg} onChange={(e)=>{setConfirmMsg(e.target.value)}} />
             </div>   
           </td>
-          <td className="cellStyle" colSpan={3}>
+        </tr>
+
+        <tr>
+          <td className="cellStyle" colSpan={2}>
+            <span><b><span style={{color: '#EA4335'}}>Confirmation Msg: </span>{shedName}-{birdsCnt}</b></span>
+          </td>
+          
+        </tr>
+
+        <tr>
+        <td className="cellStyle" colSpan={2}>
             <button type="button" onClick={handleReset} >Reset Stock</button>
           </td>
         </tr>

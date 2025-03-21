@@ -78,7 +78,7 @@ function DeleteRecord(){
         <tr>
         <td className="cellStyle">
               <select name="shed" value={shed} onChange={(e)=>{setShed(e.target.value)}}>
-                <option value="0">Select Shed</option>
+                <option value="0">Shed</option>
                 <option value="all">All Shed</option>
                 <option value="shed1">Shed 1</option>
                 <option value="shed2">Shed 2</option>
