@@ -71,8 +71,8 @@ export default function Dashboard() {
     return(
       <>
         <AuthListener />
-        <table className="dashboard">
-          <tr className="dashboard-title">
+        <table className="tableStyle">
+          <tr className="headerStyle">
             <td>Loading Stock..</td>
           </tr>
           </table>
@@ -84,8 +84,8 @@ export default function Dashboard() {
     return(
       <>
         <AuthListener />
-        <table className="dashboard">
-          <tr className="dashboard-title">
+        <table className="tableStyle">
+          <tr className="headerStyle">
             <td>Error in Loading Stock..</td>
           </tr>
           </table>
@@ -348,7 +348,7 @@ function Reset(){
           </td>
         </tr>
         <tr>
-          <td className="cellStyle">
+          <td className="subHeaderStyle">
          
               <select  name="shedName" value={shedName} onChange={(e)=>{setShedName(e.target.value)}}>
                 <option value="0">Select Shed</option>
@@ -364,7 +364,7 @@ function Reset(){
           </td>
 
          
-          <td className="cellStyle">
+          <td className="subHeaderStyle">
             
               <input type = "date" name="batch-start-date" value={batchStartDate} onChange={(e)=>{setBatchStartDate(e.target.value)}} />
             

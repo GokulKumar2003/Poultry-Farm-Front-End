@@ -70,7 +70,7 @@ function DeleteRecord(){
         </tr>
         <tr>
           <td className="cellStyle" colSpan={2}>
-            <p><span style={{color: 'red'}}>|</span> This will delete all sales and production history permanently <span style={{color: 'red'}}>|</span></p>
+            <p><span style={{color: 'red'}}>|</span> This will delete all sale and production history permanently <span style={{color: 'red'}}>|</span></p>
             <p><span style={{color: 'red'}}>|</span> Make sure to reset the stock <span style={{color: 'red'}}>|</span></p>
             <p>Confirmation Msg: <b>{""+shed+"-delete"}</b></p>
           </td>
