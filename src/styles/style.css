@@ -145,7 +145,7 @@ button:hover {
 .headerStyle {
   padding: 1em;
   text-align: center;
-  background-color: #69A1F6;
+  background-color: #4285F4;
   color: #fff;
   font-weight: bold;
   font-size: 1.25rem;
@@ -397,6 +397,11 @@ button:hover {
     max-width: 90%;
     font-size: 0.9rem;
   }
+
+  .report-tableStyle {
+    max-width: 90%;
+    font-size: 0.9rem;
+  }
   
   .dashboard {
     font-size: 0.9rem;
@@ -418,6 +423,7 @@ button:hover {
   }
   
   button {
+    width: 50%;
     margin-bottom: 1em;
   }
 
